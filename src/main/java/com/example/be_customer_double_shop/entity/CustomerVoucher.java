@@ -1,4 +1,4 @@
-package com.example.be_adm_double_shop.entity;
+package com.example.be_customer_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

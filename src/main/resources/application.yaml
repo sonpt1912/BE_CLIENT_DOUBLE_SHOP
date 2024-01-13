@@ -1,13 +1,36 @@
 server:
-  port: 8092
-
+  port: 8070
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/double_shop?useSSL=false
-    username: root
-    password: Son191203
+    url: jdbc:mysql://mysql-server.chayqw2ywd4x.ap-southeast-1.rds.amazonaws.com:3306/double_shop?useSSL=true
+    # admin only
+    username: admin
+    password: KlNvbjE5MTIwMw==
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
+#  cache:
+#    type: redis
+#    redis:
+#      cache-null-values: false
+#      use-key-prefix: true
+#      time-to-live: 3000
+#  data:
+#    redis:
+#      host: redis-15051.c1.ap-southeast-1-1.ec2.cloud.redislabs.com
+#      port: 15051
+#      username: default
+#      password: AfIEmkGHR5fGdSj2kDTtdwDgMDJfQgVL
+#  mail:
+#    username: sonptph25875@fpt.edu.vn
+#    password: bkcl gwfc ompy kdcm
+#    port: 587
+#    host: smtp.gmail.com
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true

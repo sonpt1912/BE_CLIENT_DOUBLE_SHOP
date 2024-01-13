@@ -1,12 +1,10 @@
-package com.example.be_adm_double_shop.entity;
+package com.example.be_customer_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
-
 @Entity
-@Table(name = "rank")
+@Table(name = "user_rank")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -31,15 +29,18 @@ public class Rank {
     @Column(name = "to")
     private Long to;
 
+    @Column(name= "percent")
+    private Integer percent;
+
     @Column(name = "created_by")
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private String updated_by;
 
     @Column(name = "created_time")
-    private Timestamp createdTime;
+    private String createdTime;
 
     @Column(name = "updated_time")
-    private Timestamp updatedTime;
+    private String updatedTime;
 }

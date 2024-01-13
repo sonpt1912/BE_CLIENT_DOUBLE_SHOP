@@ -1,9 +1,7 @@
-package com.example.be_adm_double_shop.entity;
+package com.example.be_customer_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "brand")
@@ -32,15 +30,15 @@ public class Brand {
     private Integer status;
 
     @Column(name = "created_by")
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private String updatedBy;
 
     @Column(name = "created_time")
-    private Timestamp createdTime;
+    private String createdTime;
 
     @Column(name = "updated_time")
-    private Timestamp updatedTime;
+    private String updatedTime;
 
 }

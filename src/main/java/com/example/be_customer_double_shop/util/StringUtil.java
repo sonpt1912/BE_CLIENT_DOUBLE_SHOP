@@ -1,4 +1,6 @@
-package com.example.be_adm_double_shop.util;
+package com.example.be_customer_double_shop.util;
+
+import java.util.List;
 
 public class StringUtil {
 
@@ -26,6 +28,10 @@ public class StringUtil {
                 return true;
         }
         return false;
+    }
+
+    public static boolean isListEmpty(List lst) {
+        return lst == null || lst.isEmpty();
     }
 
 }
