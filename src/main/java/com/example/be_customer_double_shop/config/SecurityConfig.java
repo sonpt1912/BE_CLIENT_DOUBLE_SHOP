@@ -1,7 +1,7 @@
 package com.example.be_customer_double_shop.config;
 
-import com.example.be_adm_double_shop.security.JwtAuthenticationEntryPoint;
-import com.example.be_adm_double_shop.security.JwtAuthenticationFilter;
+import com.example.be_customer_double_shop.security.JwtAuthenticationEntryPoint;
+import com.example.be_customer_double_shop.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +27,7 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint point;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+
 
     @Autowired
     private JwtAuthenticationFilter filter;
@@ -43,7 +42,7 @@ public class SecurityConfig {
                 .requestMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+//                .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

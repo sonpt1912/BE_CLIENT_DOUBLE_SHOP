@@ -7,10 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class JwtRequest {
-
+public class UserRequest {
     private String username;
 
     private String password;
-
 }
