@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OTPCacheRepository extends CrudRepository<OTPCache, String> {
+
+    boolean existsByKeyAndValue(OTPCache otpCache);
+
 }

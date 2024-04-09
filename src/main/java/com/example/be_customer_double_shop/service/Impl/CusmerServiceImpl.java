@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CusmerServiceImpl implements CustomerService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -31,5 +29,15 @@ public class CusmerServiceImpl implements CustomerService {
     @Override
     public Customer findUserbyEmail(String email) {
         return customerRepository.findCustomerByEmail(email);
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return customerRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Object createCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 }
