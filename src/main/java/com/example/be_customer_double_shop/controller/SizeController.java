@@ -4,7 +4,6 @@ import com.example.be_customer_double_shop.config.EnableWrapResponse;
 import com.example.be_customer_double_shop.dto.request.SizeRequest;
 import com.example.be_customer_double_shop.entity.Size;
 import com.example.be_customer_double_shop.service.SizeService;
-import com.example.be_customer_double_shop.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

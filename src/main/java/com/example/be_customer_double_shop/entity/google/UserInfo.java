@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UserInfoGoogle {
+public class UserInfo {
 
     private String iss;
 

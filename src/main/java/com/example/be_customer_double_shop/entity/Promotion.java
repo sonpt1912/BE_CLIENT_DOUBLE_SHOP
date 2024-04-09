@@ -3,7 +3,8 @@ package com.example.be_customer_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "promotion")
@@ -19,14 +20,26 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "name")
     private String name;
 
+    @Column(name = "discount_amount")
+    private BigDecimal discountAmount;
+
+    @Column(name = "discount_percent")
+    private Integer discountPercent;
+
+    @Column(name = "status")
+    private Integer status;
+
     @Column(name = "start_date")
-    private Date StartDate;
+    private String startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private String endDate;
 
     @Column(name = "created_by")
     private String createdBy;
@@ -39,5 +52,9 @@ public class Promotion {
 
     @Column(name = "updated_time")
     private String updatedTime;
+
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)
+    private List<DetailPromotion> detailPromotions;
+
 
 }

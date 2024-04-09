@@ -7,7 +7,7 @@ import com.example.be_customer_double_shop.service.SizeService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SizeServiceImplement implements SizeService {
+public class SizeServiceImpl implements SizeService {
     @Override
     public ListResponse<Size> getAllByConditon(SizeRequest request) {
         return null;

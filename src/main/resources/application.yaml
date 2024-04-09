@@ -1,36 +1,55 @@
 server:
-  port: 8070
+  port: 8072
 spring:
+#  main:
+#    allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://mysql-server.chayqw2ywd4x.ap-southeast-1.rds.amazonaws.com:3306/double_shop?useSSL=true
-    # admin only
-    username: admin
-    password: KlNvbjE5MTIwMw==
+    url: jdbc:mysql://localhost:3306/double_shop?useSSL=true
+    username: root
+    password: Son191203
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: false
-#  cache:
-#    type: redis
-#    redis:
-#      cache-null-values: false
-#      use-key-prefix: true
-#      time-to-live: 3000
-#  data:
-#    redis:
-#      host: redis-15051.c1.ap-southeast-1-1.ec2.cloud.redislabs.com
-#      port: 15051
-#      username: default
-#      password: AfIEmkGHR5fGdSj2kDTtdwDgMDJfQgVL
-#  mail:
-#    username: sonptph25875@fpt.edu.vn
-#    password: bkcl gwfc ompy kdcm
-#    port: 587
-#    host: smtp.gmail.com
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 371453517569-sdlqpnul2t1iihsrk3u2apb6qvik0cvh.apps.googleusercontent.com
+            client-secret: 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
+    jwt:
+      secret_key: eyJhbGciOiJIUzUxMiJ9eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwMTA1NjM3OSwiaWF0IjoxNzAxMDU2Mzc5fQOl6Psk1arnTFAbGoC7EBmrm7Z58J4AMaml6dN01sQnr7fjfdgsBRBq8mOKIxqXTtr5yNEmgzhjU9HDzRxSQ
+      expiration_time: 5
+  cache:
+    type: redis
+    redis:
+      cache-null-values: false
+      use-key-prefix: true
+      time-to-live: 3000
+  data:
+    redis:
+      host: redis-14407.c246.us-east-1-4.ec2.cloud.redislabs.com
+      port: 14407
+      username: default
+      password: qXVaFVpc4K1YA5lPpt1NtOdWg40XbL6Q
+  mail:
+    username: sonptph25875@fpt.edu.vn
+    password: bkcl gwfc ompy kdcm
+    port: 587
+    host: smtp.gmail.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+cloudiary:
+  cloud_name: dm256lpnu
+  api_key: 463632651578279
+  api_secret: CEQdGRFAMKw29flEN7UELfTm-Wg
+  secure: true
+
+ghn:
+  token: 81e2108c-e9c6-11ee-b1d4-92b443b7a897

@@ -1,29 +1,29 @@
 package com.example.be_customer_double_shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "detail_material")
+@Table(name = "detail_promotion")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class DetailMaterial {
 
+public class DetailPromotion {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "id_material")
-    private Material material;
 
     @ManyToOne
     @JoinColumn(name = "id_detail_product")
     private DetailProduct detailProduct;
 
-
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_promotion")
+    private Promotion promotion;
 }

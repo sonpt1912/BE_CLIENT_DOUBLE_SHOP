@@ -25,11 +25,6 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     @Autowired
-    private JwtAuthenticationEntryPoint point;
-
-
-
-    @Autowired
     private JwtAuthenticationFilter filter;
 
 
