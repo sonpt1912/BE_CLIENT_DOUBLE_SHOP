@@ -2,13 +2,13 @@ package com.example.be_customer_double_shop.util;
 
 public class Constant {
 
-    public static final String INVALID_OTP="INVALID_OTP";
+    public static final String INVALID_OTP = "INVALID_OTP";
 
-    public  static final String INTERNAL_SERVER_ERROR="INTERNAL_SERVER_ERROR";
+    public static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
 
     public static final String SUCCESS = "SUCCESS";
 
-    public static final String NOT_FOUND="NOT_FOUND";
+    public static final String NOT_FOUND = "NOT_FOUND";
 
     public static final String FAIL = "FAIL";
 

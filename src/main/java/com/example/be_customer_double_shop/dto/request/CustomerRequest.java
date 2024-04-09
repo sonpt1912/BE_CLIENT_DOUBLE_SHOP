@@ -8,10 +8,19 @@ import lombok.*;
 @Setter
 @Builder
 public class CustomerRequest {
+
     private String phone;
+
     private Integer status;
+
     private String username;
+
     private String email;
+
     private String name;
+
+    private String otp;
+
+    private String password;
 
 }

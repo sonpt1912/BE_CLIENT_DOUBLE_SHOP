@@ -1,15 +1,18 @@
 package com.example.be_customer_double_shop.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "customer_voucher")
+@Entity
+@Table(name = "favorite")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Builder
-public class CustomerVoucher {
+public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +20,11 @@ public class CustomerVoucher {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_voucher", referencedColumnName = "id")
-    private Voucher voucher;
-
-    @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
 
-    @Column(name = "usage_date", length = 45)
-    private String usageDate;
+    @ManyToOne
+    @JoinColumn(name = "id_product", referencedColumnName = "id")
+    private Product product;
 
 }

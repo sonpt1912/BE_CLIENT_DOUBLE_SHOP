@@ -1,7 +1,6 @@
 package com.example.be_customer_double_shop.security;
 
 import com.example.be_customer_double_shop.repository.CustomerRepository;
-
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -58,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             //fetch user detail from username
-            UserDetails userDetails = (UserDetails) userDetailsService.findCustomerByUsername(username);
+            UserDetails userDetails = userDetailsService.findCustomerByUsername(username);
 
             Boolean validateToken = jwtHelper.isTokenExpired(token.substring(7));
             if (validateToken) {

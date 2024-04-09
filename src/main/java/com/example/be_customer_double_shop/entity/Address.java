@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,9 +14,13 @@ import lombok.*;
 public class Address {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_customer", referencedColumnName = "id")
+    private Customer customer;
 
     @Column(name = "district")
     private String district;
@@ -29,18 +34,18 @@ public class Address {
     @Column(name = "created_by")
     private String createdBy;
 
-    @Column(name = "updated_by")
-    private String updatedBy;
-
     @Column(name = "created_time")
     private String createdTime;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     @Column(name = "updated_time")
     private String updatedTime;
 
-
-    @ManyToOne
-    @JoinColumn(name = "id_customer", referencedColumnName = "id")
-    private Customer customer;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "is_defaul", length = 45)
+    private Integer defaul;
 
 }

@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,9 +22,6 @@ public class Customer implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_rank", referencedColumnName = "id")
-//    private Rank rank;
 
     @Column(name = "username", length = 45)
     private String username;
@@ -67,30 +63,36 @@ public class Customer implements UserDetails {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Address> address;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
     @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
+
+
 }
 

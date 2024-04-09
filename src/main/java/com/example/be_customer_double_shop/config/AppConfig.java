@@ -4,7 +4,6 @@ import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -13,7 +12,6 @@ import java.util.Map;
 @Configuration
 public class AppConfig {
 
-    @Value("${cloudiary.cloud_name}")
     private String cloudName;
 
 //    @Value("${cloudiary.api_key")
@@ -24,8 +22,6 @@ public class AppConfig {
 
     @Value("${cloudiary.api_secret}")
     private String apiSecret;
-
-
 
     @Bean
     public RestTemplate restTemplate() {

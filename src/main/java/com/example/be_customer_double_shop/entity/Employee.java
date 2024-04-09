@@ -21,56 +21,55 @@ public class Employee implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    @Column(name = "gender")
+    private Integer gender;
+
+    @Column(name = "birth_day")
+    private String birthDay;
+
+    @Column(name = "role")
+    private Integer role;
+
+    @Column(name = "status")
+    private Integer status;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "provice")
+    private String provice;
+
+    @Column(name = "city")
+    private String city;
 
     @Column(name = "description")
     private String description;
+    @Column(name = "password")
+    private String password;
 
-    @Column(name = "district", nullable = false)
-    private String district;
-
-    @Column(name = "provice", nullable = false)
-    private String provice;
-
-    @Column(name = "city", nullable = false)
-    private String city;
-
-    @Column(name = "gender", nullable = false)
-    private Integer gender;
-
-    @Column(name = "birth_day", nullable = false)
-    private String birthDay;
-
-    @Column(name = "role", nullable = false)
-    private String role;
-
-    @Column(name = "status", nullable = false)
-    private Integer status;
-
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
-
-    @Column(name = "updated_by")
-    private String updatedBy;
-
-    @Column(name = "created_time", nullable = false)
+    @Column(name = "created_time")
     private String createdTime;
 
     @Column(name = "updated_time")
     private String updatedTime;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @Column(name = "created_by")
+    private String createdBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

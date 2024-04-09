@@ -1,9 +1,7 @@
 package com.example.be_customer_double_shop.security;
 
-import com.example.be_customer_double_shop.entity.Employee;
-import com.example.be_customer_double_shop.entity.google.UserInfoGoogle;
 import com.example.be_customer_double_shop.entity.Customer;
-import com.example.be_customer_double_shop.entity.google.UserInfoGoogle;
+import com.example.be_customer_double_shop.entity.google.UserInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -60,7 +58,7 @@ public class JwtProvider {
         String payload = new String(decoder.decode(chunks[1]));
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            UserInfoGoogle payloadObject = objectMapper.readValue(payload, UserInfoGoogle.class);
+            UserInfo payloadObject = objectMapper.readValue(payload, UserInfo.class);
 
             return payloadObject;
         } catch (Exception e) {
@@ -80,11 +78,9 @@ public class JwtProvider {
         Map<String, Object> claims = new HashMap<>();
         claims.put("name", customer.getName());
         claims.put("email", customer.getEmail());
-        claims.put("phone",customer.getPhone());
-
+        claims.put("phone", customer.getPhone());
         claims.put("gender", customer.getGender());
         claims.put("birth_day", customer.getBirthDay());
-
         claims.put("status", customer.getStatus());
         claims.put("created_by", customer.getCreatedBy());
         claims.put("updated_by", customer.getUpdatedBy());

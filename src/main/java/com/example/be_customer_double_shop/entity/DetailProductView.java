@@ -1,10 +1,9 @@
 package com.example.be_customer_double_shop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "detail_product")
@@ -13,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-public class DetailProduct {
+public class DetailProductView {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +25,8 @@ public class DetailProduct {
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    private Product product;
+    @JsonIgnore
+    private ProductView productView;
 
     @ManyToOne
     @JoinColumn(name = "id_size")
@@ -50,9 +50,9 @@ public class DetailProduct {
 
     @Column(name = "quantity")
     private Long quantity;
-
-    @Column(name = "price")
-    private BigDecimal price;
+//
+//    @Column(name = "price")
+//    private Long price;
 
     @Column(name = "status", nullable = false)
     private Integer status;
@@ -68,8 +68,5 @@ public class DetailProduct {
 
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
-
-    @Transient
-    private BigDecimal discountAmout;
 
 }
