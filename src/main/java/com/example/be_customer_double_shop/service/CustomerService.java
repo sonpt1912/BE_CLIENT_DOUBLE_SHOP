@@ -8,4 +8,8 @@ public interface CustomerService {
 
     Customer findUserbyEmail(String email);
 
+    Boolean existsByEmail(String email);
+
+    Object createCustomer(Customer customer);
+
 }
