@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     //TODO: get top 3 - theo cac loai du kien ( ban chay nhat, moi... )
-    @PostMapping("/")
+    @PostMapping("/get-top-3-by-condition")
     public ResponseEntity getTop3ByConditioin(ProductRequest request) {
         return new ResponseEntity(productService.getByCondition(request), HttpStatus.OK);
     }

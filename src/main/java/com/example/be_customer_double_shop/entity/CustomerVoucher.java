@@ -3,6 +3,7 @@ package com.example.be_customer_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Table(name = "customer_voucher")
 @AllArgsConstructor
 @NoArgsConstructor
