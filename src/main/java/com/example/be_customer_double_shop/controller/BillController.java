@@ -33,8 +33,8 @@ public class BillController {
     // add new bill
     @PostMapping("/create-bill")
     public ResponseEntity createBill(@RequestBody BillRequest billRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws ParseException {
-        String creator = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(billService.createBill(billRequest, creator), HttpStatus.OK);
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(billService.createBill(billRequest, username), HttpStatus.OK);
     }
 
     @PostMapping("/update-bill")
@@ -44,8 +44,9 @@ public class BillController {
     }
 
     @PostMapping("/get-bill-by-condition")
-    public ResponseEntity getBillByCondition(@RequestBody BillRequest billRequest) {
-        return new ResponseEntity(billService.getAllByCondition(billRequest), HttpStatus.OK);
+    public ResponseEntity getBillByCondition(@RequestHeader("Authorization") String token, @RequestBody BillRequest billRequest) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(billService.getAllByCondition(billRequest, username), HttpStatus.OK);
     }
 
     @PostMapping("/get-bill-history")

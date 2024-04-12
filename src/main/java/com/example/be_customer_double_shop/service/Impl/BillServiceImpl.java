@@ -164,7 +164,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Object getAllByCondition(BillRequest billRequest) {
+    public Object getAllByCondition(BillRequest billRequest, String username) {
         ListResponse<Bill> listResponse = new ListResponse<>();
 
         StringBuilder str = new StringBuilder();

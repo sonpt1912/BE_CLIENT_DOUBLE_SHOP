@@ -6,11 +6,11 @@ import java.text.ParseException;
 
 public interface BillService {
 
-    Object createBill(BillRequest billRequest, String creator) throws ParseException;
+    Object createBill(BillRequest billRequest, String username) throws ParseException;
 
-    Object updateBill(BillRequest billRequest, String creator);
+    Object updateBill(BillRequest billRequest, String username);
 
-    Object getAllByCondition(BillRequest billRequest);
+    Object getAllByCondition(BillRequest billRequest, String username);
 
     Object getBillById(BillRequest billRequest);
 
