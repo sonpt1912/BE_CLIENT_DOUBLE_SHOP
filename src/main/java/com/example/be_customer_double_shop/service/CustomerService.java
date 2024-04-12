@@ -12,4 +12,6 @@ public interface CustomerService {
 
     Object createCustomer(Customer customer);
 
+    Object updateCustomer(Customer customer);
+
 }

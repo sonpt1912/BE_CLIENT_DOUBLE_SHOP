@@ -42,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
         str.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
         str.append(" WHERE 1 = 1 ");
 
+        // TODO: them orderby o day
+
         if (!StringUtil.stringIsNullOrEmty(request.getIdProduct())) {
             str.append(" AND p.id = :id ");
             params.put("id", request.getIdProduct());
