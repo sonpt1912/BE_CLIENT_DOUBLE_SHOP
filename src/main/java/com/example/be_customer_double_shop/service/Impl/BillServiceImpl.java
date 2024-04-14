@@ -46,44 +46,33 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private CustomerVoucherRepository customerVoucherRepository;
 
+
+    @Autowired
+    private CustomerService customerService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     @Transactional
-    public Object createBill(BillRequest billRequest, String creator) throws ParseException {
+    public Object createBill(BillRequest billRequest, String username) throws ParseException {
         String code = UUID.randomUUID().toString();
         Boolean check = true;
         while (check) {
             code = UUID.randomUUID().toString();
             check = billRepository.existsByCode(code);
         }
-        Customer customer = null;
-        Voucher voucher = null;
-        if (!StringUtil.stringIsNullOrEmty(billRequest.getIdCustomer())) {
-            customer = Customer.builder().id(billRequest.getIdCustomer()).build();
-        }
 
+        Voucher voucher = null;
         if (!StringUtil.stringIsNullOrEmty(billRequest.getIdVoucher())) {
             voucher = Voucher.builder().id(billRequest.getIdVoucher()).build();
-            // list detailvoucher
-            List<CustomerVoucher> cusVoucher = customerVoucherRepository.findAllByVoucher(voucher);
-            if (!StringUtil.isListEmpty(cusVoucher)) {
-
-                if (customer == null) {
-                    return new ValidationException(Constant.API001, "Ap dung khong thanh cong");
-                }
-
-                // TODO: tim xem voucher co ap dung cho ai khong
-            }
         }
 
         // create bill
         Bill bill = billRepository.save(Bill.builder().code(code)
                 .totalAmount(billRequest.getTotalAmout())
-                .customer(customer)
+                .customer(customerService.findUserbyUsername(username))
                 .voucher(voucher)
-                .employee(null)
                 .discountAmount(billRequest.getDiscoutAmout())
                 .phone(billRequest.getPhone())
                 .address(billRequest.getAddress())
@@ -95,15 +84,11 @@ public class BillServiceImpl implements BillService {
 
         if (bill != null) {
             // create bill_history
-            String description = "";
-            description = "Tạo hoa đơn, thanh toán tại quầy, hoàn tất";
-            if (bill.getType() == Constant.BILL.TYPE.DEVERILY) {
-                description = "Tạo hóa đơn, cho đơn ship";
-            }
+            String description = "Tạo hóa đơn, cho đơn ship";
 
             BillHistory billHistory = BillHistory.builder().bill(bill)
                     .status(billRequest.getStatus())
-                    .createdBy(creator)
+                    .createdBy(username)
                     .createdTime(DateUtil.dateToString4(new Date()))
                     .description(description).build();
             billHistoryService.createBillHistory(billHistory);
@@ -115,7 +100,7 @@ public class BillServiceImpl implements BillService {
                     vou.setStatus(Constant.IN_ACTIVE);
                 }
                 vou.setQuantity(voucherQuantity);
-                voucherService.update(vou, creator);
+                voucherService.update(vou, username);
             }
 
             // add cac san pham vao bill
@@ -129,7 +114,7 @@ public class BillServiceImpl implements BillService {
                     if (quantity == 0 || quantity < 0) {
                         currentProduct.setStatus(Constant.IN_ACTIVE);
                     }
-                    detailProductService.updateDetailProduct(currentProduct, creator);
+                    detailProductService.updateDetailProduct(currentProduct, username);
                 }
             }
             return Constant.SUCCESS;

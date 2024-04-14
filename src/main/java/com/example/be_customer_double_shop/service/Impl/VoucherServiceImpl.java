@@ -31,17 +31,7 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public String save(Voucher voucher, String username) {
-        return null;
-    }
-
-    @Override
     public Object update(Voucher voucherRequest, String username) throws ParseException {
-        return null;
-    }
-
-    @Override
-    public String saveAll(Voucher voucher, String username) {
         return null;
     }
 
