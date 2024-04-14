@@ -449,3 +449,14 @@ CREATE TABLE `double_shop`.`favorite`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
+
+
+ALTER TABLE `double_shop`.`cart`
+    ADD COLUMN `id_customer` BIGINT NOT NULL AFTER `id_product`,
+ADD INDEX `FK_CART_CUS_idx` (`id_customer` ASC) VISIBLE;
+ALTER TABLE `double_shop`.`cart`
+    ADD CONSTRAINT `FK_CART_CUS`
+        FOREIGN KEY (`id_customer`)
+            REFERENCES `double_shop`.`customer` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;

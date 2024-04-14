@@ -21,6 +21,10 @@ public class Cart {
     @JoinColumn(name = "id_product", referencedColumnName = "id")
     private DetailProduct detailProduct;
 
+    @ManyToOne
+    @JoinColumn(name = "id_customer", referencedColumnName = "id")
+    private Customer customer;
+
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
