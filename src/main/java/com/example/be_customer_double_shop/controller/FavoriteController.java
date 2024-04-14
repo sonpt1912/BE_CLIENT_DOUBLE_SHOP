@@ -6,4 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/favorite")
 public class FavoriteController {
+
+    // add to favorite
+
+    // delete from favorite
+
+
+
 }
