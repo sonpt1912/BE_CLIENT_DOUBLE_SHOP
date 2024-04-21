@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SizeServiceImpl implements SizeService {
-    @Override
-    public ListResponse<Size> getAllByConditon(SizeRequest request) {
-        return null;
-    }
 
     @Override
     public String save(Size size) {

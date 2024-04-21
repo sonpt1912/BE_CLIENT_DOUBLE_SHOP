@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.controller.auth;
 
+import com.example.be_customer_double_shop.config.EnableWrapResponse;
 import com.example.be_customer_double_shop.dto.JwtResponse;
 import com.example.be_customer_double_shop.dto.TokenRequest;
 import com.example.be_customer_double_shop.dto.ValidationException;
@@ -65,11 +66,8 @@ public class AuthController {
     public ResponseEntity login(@RequestBody CustomerRequest request) {
         try {
             Customer user = new Customer();
-            if (user.getUsername() != null) {
+            if (request.getUsername() != null) {
                 user = userService.findUserbyUsername(request.getUsername());
-            }
-            if (user.getEmail() != null) {
-                user = userService.findUserbyEmail(request.getUsername());
             }
             if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                 String token = jwtProvider.generateToken(user);

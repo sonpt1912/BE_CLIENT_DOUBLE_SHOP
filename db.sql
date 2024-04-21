@@ -302,6 +302,7 @@ CREATE TABLE `double_shop`.`bill`
     `id_employee`    BIGINT      NOT NULL,
     `id_voucher`     BIGINT NULL,
     `code`           VARCHAR(45) NOT NULL,
+    `created_time`   VARCHAR(45) NULL,
     `phone`          VARCHAR(45) NULL,
     `address`        VARCHAR(145) NULL,
     `type`           INT         NOT NULL,

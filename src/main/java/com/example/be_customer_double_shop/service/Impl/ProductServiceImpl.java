@@ -127,7 +127,7 @@ public class ProductServiceImpl implements ProductService {
 
         listResponse.setTotalRecord(totalRecord);
 
-        return null;
+        return listResponse;
     }
 
     @Override
