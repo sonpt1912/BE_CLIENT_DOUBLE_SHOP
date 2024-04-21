@@ -37,6 +37,9 @@ public class Bill {
     @Column(name = "phone", length = 45)
     private String phone;
 
+    @Column(name = "created_time")
+    private String createdTime;
+
     @Column(name = "address")
     private String address;
 
