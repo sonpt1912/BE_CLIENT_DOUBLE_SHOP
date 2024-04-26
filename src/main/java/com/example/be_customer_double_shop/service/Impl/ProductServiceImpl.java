@@ -36,13 +36,11 @@ public class ProductServiceImpl implements ProductService {
         str.append(" SELECT p.* FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
         str.append(" INNER JOIN size s ON dp.id_size = s.id ");
         str.append(" INNER JOIN color c ON dp.id_color = c.id ");
-        str.append(" INNER JOIN size s ON dp.id_size = s.id ");
+        str.append(" INNER JOIN material m ON dp.id_material = m.id ");
         str.append(" INNER JOIN category ct ON dp.id_category = ct.id ");
         str.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
         str.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
         str.append(" WHERE 1 = 1 ");
-
-        // TODO: them orderby o day
 
         if (!StringUtil.stringIsNullOrEmty(request.getIdProduct())) {
             str.append(" AND p.id = :id ");
@@ -61,12 +59,16 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdColor());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
-            str.append(" AND p.id = :id ");
+            str.append(" AND cl.id = :id ");
             params.put("id", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
-            str.append(" AND p.id = :id ");
+            str.append(" AND s.id = :id ");
             params.put("id", request.getIdProduct());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            str.append(" AND m.id = :id ");
+            params.put("id", request.getIdMaterial());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
@@ -79,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
             params.put("pageSize", request.getPageSize());
         }
 
-        Query query = entityManager.createNativeQuery(str.toString());
+        Query query = entityManager.createNativeQuery(str.toString(), Product.class);
         params.forEach(query::setParameter);
         listResponse.setListData(query.getResultList());
 
@@ -89,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
         str.append(" SELECT COUNT(*) FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
         str.append(" INNER JOIN size s ON dp.id_size = s.id ");
         str.append(" INNER JOIN color c ON dp.id_color = c.id ");
-        str.append(" INNER JOIN size s ON dp.id_size = s.id ");
+        str.append(" INNER JOIN material m ON dp.id_material = m.id ");
         str.append(" INNER JOIN category ct ON dp.id_category = ct.id ");
         str.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
         str.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
@@ -112,18 +114,22 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdColor());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
-            str.append(" AND p.id = :id ");
+            str.append(" AND cl.id = :id ");
             params.put("id", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
-            str.append(" AND p.id = :id ");
+            str.append(" AND s.id = :id ");
             params.put("id", request.getIdProduct());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            str.append(" AND m.id = :id ");
+            params.put("id", request.getIdMaterial());
         }
 
         Query queryCount = entityManager.createNativeQuery(str.toString());
         params.forEach(queryCount::setParameter);
 
-        int totalRecord = (int) queryCount.getSingleResult();
+        int totalRecord = ((Long) queryCount.getSingleResult()).intValue();
 
         listResponse.setTotalRecord(totalRecord);
 
