@@ -21,7 +21,7 @@ public class ProductController {
 
 
     @PostMapping("/get-all-by-condition")
-    public ResponseEntity getAllByCondition(ProductRequest request) {
+    public ResponseEntity getAllByCondition(@RequestBody ProductRequest request) {
         return new ResponseEntity(productService.getByCondition(request), HttpStatus.OK);
     }
 

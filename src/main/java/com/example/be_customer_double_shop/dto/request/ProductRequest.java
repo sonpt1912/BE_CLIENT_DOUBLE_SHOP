@@ -23,6 +23,8 @@ public class ProductRequest {
 
     private Long idCategory;
 
+    private Long idMaterial;
+
     private Long name;
 
     private int page;
