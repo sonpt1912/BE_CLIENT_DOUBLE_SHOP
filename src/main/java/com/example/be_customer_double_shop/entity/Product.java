@@ -32,6 +32,22 @@ public class Product {
     @Column(name = "status")
     private Integer status;
 
+    @ManyToOne
+    @JoinColumn(name = "id_brand")
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "id_collar")
+    private Collar collar;
+
+    @ManyToOne
+    @JoinColumn(name = "id_category")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "id_material")
+    private Material material;
+
     @Column(name = "created_by")
     private String createdBy;
 
