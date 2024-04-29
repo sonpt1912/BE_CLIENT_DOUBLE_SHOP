@@ -1,8 +1,6 @@
 package com.example.be_customer_double_shop.controller;
 
 import com.example.be_customer_double_shop.dto.request.ProductRequest;
-import com.example.be_customer_double_shop.entity.Cart;
-import com.example.be_customer_double_shop.service.CartService;
 import com.example.be_customer_double_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

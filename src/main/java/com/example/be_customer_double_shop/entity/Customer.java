@@ -63,6 +63,7 @@ public class Customer implements UserDetails {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Address> address;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -92,7 +93,5 @@ public class Customer implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }
 

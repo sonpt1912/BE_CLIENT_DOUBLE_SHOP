@@ -34,14 +34,11 @@ public class Bill {
     @Column(name = "code", unique = true, length = 45)
     private String code;
 
-    @Column(name = "phone", length = 45)
-    private String phone;
-
     @Column(name = "receiver", length = 45)
     private String receiver;
 
-    @Column(name = "created_time")
-    private String createdTime;
+    @Column(name = "phone", length = 45)
+    private String phone;
 
     @Column(name = "address")
     private String address;
@@ -66,6 +63,9 @@ public class Bill {
 
     @Column(name = "money_ship")
     private BigDecimal moneyShip;
+
+    @Column(name = "created_time")
+    private String createdTime;
 
 
 }

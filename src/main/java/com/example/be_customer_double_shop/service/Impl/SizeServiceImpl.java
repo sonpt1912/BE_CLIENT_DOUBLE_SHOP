@@ -1,6 +1,5 @@
 package com.example.be_customer_double_shop.service.Impl;
 
-import com.example.be_customer_double_shop.dto.response.ListResponse;
 import com.example.be_customer_double_shop.entity.Size;
 import com.example.be_customer_double_shop.service.SizeService;
 import org.springframework.stereotype.Service;
