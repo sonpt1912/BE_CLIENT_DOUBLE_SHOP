@@ -1,6 +1,5 @@
 package com.example.be_customer_double_shop.controller.auth;
 
-import com.example.be_customer_double_shop.config.EnableWrapResponse;
 import com.example.be_customer_double_shop.dto.JwtResponse;
 import com.example.be_customer_double_shop.dto.TokenRequest;
 import com.example.be_customer_double_shop.dto.ValidationException;
@@ -14,8 +13,6 @@ import com.example.be_customer_double_shop.service.MailService;
 import com.example.be_customer_double_shop.util.Constant;
 import com.example.be_customer_double_shop.util.DateUtil;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;

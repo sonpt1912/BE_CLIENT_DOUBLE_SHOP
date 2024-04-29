@@ -16,10 +16,10 @@ public interface DetailProductRepository extends JpaRepository<DetailProduct, Lo
             "       dt.color AS color," +
             "       dt.product AS product, " +
             "       dt.size AS size, " +
-            "       dt.brand AS brand, " +
-            "       dt.collar AS collar, " +
-            "       dt.category AS category, " +
-            "       dt.material AS material, " +
+            "       pd.brand AS brand, " +
+            "       pd.collar AS collar, " +
+            "       pd.category AS category, " +
+            "       pd.material AS material, " +
             "       dt.quantity AS quantity, " +
             "       dt.status AS status, " +
             "       dt.createdBy AS createdBy, " +
@@ -27,16 +27,16 @@ public interface DetailProductRepository extends JpaRepository<DetailProduct, Lo
             "       dt.updatedBy AS updatedBy, " +
             "       dt.updatedTime AS updatedTime, " +
             "       dt.price AS price, " +
-            " CASE      WHEN (p.discountAmount > 0)" +
-            "               THEN dt.price - p.discountAmount" +
-            "           WHEN (p.discountPercent > 0)" +
-            "               THEN (dt.price / (100 * p.discountPercent))" +
-            "           ELSE 0" +
-            "           END AS discountAmount " +
+            "      MAX(CASE " +
+            "               WHEN p.discountAmount > 0 THEN p.discountAmount " +
+            "               WHEN p.discountPercent > 0 THEN (100 * p.discountPercent) / dt.price " +
+            "               ELSE 0 " +
+            "           END) AS discountAmount " +
             " FROM DetailProduct dt " +
+            "         INNER JOIN Product pd ON pd = dt.product " +
             "         LEFT JOIN DetailPromotion dp on dt = dp.detailProduct  " +
             "         LEFT JOIN Promotion p on dp.promotion = p " +
-            " WHERE dt.product.id = :id AND dt.status = 0")
+            " WHERE dt.product.id = :id AND (dt.status = 0 AND  p.status = 0 OR p.status IS NULL) ")
     List<DetailProductDao> getAllDetailProduct(@Param("id") Long id);
 
 }

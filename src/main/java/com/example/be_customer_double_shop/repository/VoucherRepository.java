@@ -10,11 +10,14 @@ import java.util.List;
 
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher,Long> {
-    @Query(value = "SELECT CODE FROM voucher WHERE code = :code", nativeQuery = true)
-    String checkCodeExits(@Param("code") String code);
 
     @Query(value = "SELECT * FROM voucher WHERE code = :code", nativeQuery = true)
     Voucher getVoucherByCode(@Param("code") String code);
 
-    List<Voucher> findAllByStatus(int t);
+    @Query(value = "SELECT v " +
+            "FROM Voucher v " +
+            "         LEFT JOIN CustomerVoucher cv on v = cv.voucher " +
+            "         INNER JOIN Customer c on cv.customer = c " +
+            "WHERE c.username = :username AND v.status = 0 AND v.quantity > 0")
+    List<Voucher> findAllByUsernameLogin(@Param("username") String username);
 }

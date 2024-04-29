@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "detail_product")
 @AllArgsConstructor
@@ -12,6 +14,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@ToString
 public class DetailProductView {
 
     @Id
@@ -20,39 +23,46 @@ public class DetailProductView {
     private Long id;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "id_color")
     private Color color;
 
     @ManyToOne
     @JoinColumn(name = "id_product")
     @JsonIgnore
+    @ToString.Exclude
     private ProductView productView;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "id_size")
     private Size size;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "id_brand")
     private Brand brand;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "id_collar")
     private Collar collar;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "id_category")
     private Category category;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "id_material")
     private Material material;
 
     @Column(name = "quantity")
     private Long quantity;
-//
-//    @Column(name = "price")
-//    private Long price;
+
+    @Column(name = "price")
+    private Long price;
 
     @Column(name = "status", nullable = false)
     private Integer status;
@@ -69,4 +79,10 @@ public class DetailProductView {
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
 
+@OneToMany(mappedBy = "detailProduct")
+@JsonIgnore
+private List<DetailPromotion> detailPromotions;
+
+    @Transient
+    private boolean checkKM;
 }

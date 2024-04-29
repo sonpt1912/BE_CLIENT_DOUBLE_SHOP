@@ -2,14 +2,11 @@ package com.example.be_customer_double_shop.service;
 
 import com.example.be_customer_double_shop.entity.Voucher;
 
-import java.text.ParseException;
+import java.util.List;
 
 public interface VoucherService {
 
-    Voucher getOneId(Long id);
-
-    Object update(Voucher voucherRequest, String username) throws ParseException;
-
+    List<Voucher> getAllVoucherByUserLogin(String username);
 
     Voucher getByCode(String code);
 

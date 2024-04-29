@@ -13,6 +13,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Builder
+@ToString
 public class ProductView {
 
     @Id
@@ -48,4 +49,7 @@ public class ProductView {
     private List<DetailProduct> listDetailProduct;
 
     @OneToMany(mappedBy = "productView", cascade = CascadeType.ALL)
-    private List<DetailProductView> detailProducts;}
+    private List<DetailProductView> detailProducts;
+//    @Transient
+//    private List<SanPhamCoKhuyenMai> sanPhamCoKhueynMais;
+}
