@@ -59,11 +59,6 @@ public class Customer implements UserDetails {
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
 
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Address> address;
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

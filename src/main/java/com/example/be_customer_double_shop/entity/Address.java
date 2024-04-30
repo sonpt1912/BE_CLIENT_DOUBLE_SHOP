@@ -45,6 +45,7 @@ public class Address {
 
     @Column(name = "description")
     private String description;
+
     @Column(name = "is_defaul", length = 45)
     private Integer defaul;
 

@@ -58,6 +58,11 @@ public class AuthController {
         return new ResponseEntity(authService.resetPassword(request), HttpStatus.OK);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity register(@RequestBody CustomerRequest request) {
+        return new ResponseEntity(authService.register(request), HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody CustomerRequest request) {
         try {
