@@ -32,10 +32,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Object resetPassword(CustomerRequest userRequest) {
-        if (cacheRepository.existsByKeyAndValue(new OTPCache(userRequest.getEmail(), userRequest.getOtp()))) {
-            Customer customer = customerRepository.findCustomerByEmail(userRequest.getEmail());
-            customer.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-            return customerRepository.save(customer);
+        try {
+            OTPCache otpCache = cacheRepository.findById(userRequest.getEmail()).get();
+            if (otpCache.getKey().equals(userRequest.getEmail()) && otpCache.getValue().equals(userRequest.getOtp())) {
+                Customer customer = customerRepository.findCustomerByEmail(userRequest.getEmail());
+                customer.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+                return customerRepository.save(customer);
+            }
+        } catch (Exception e) {
+            return new ValidationException(Constant.API001, "otp khong chinh xac");
         }
         return new ValidationException(Constant.API001, "otp khong chinh xac");
     }
