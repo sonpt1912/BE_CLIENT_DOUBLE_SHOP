@@ -9,4 +9,6 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
+    Object getDetailProductByProduct(ProductRequest request);
+
 }

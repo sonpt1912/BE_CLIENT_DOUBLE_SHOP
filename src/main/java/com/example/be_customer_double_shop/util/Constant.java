@@ -28,6 +28,8 @@ public class Constant {
 
     public static final String DEFAULT_PASSWORD = "hello";
 
+    public static final Integer isDefault = 0;
+
     public interface DETAIL_PRODUCT {
 
         String CATEGORY = "CATEGORY";

@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@RedisHash(value = "OTP_CACHE", timeToLive = 1L)
+@RedisHash(value = "OTP_CACHE", timeToLive = 120L)
 public class OTPCache implements Serializable {
 
     @Id

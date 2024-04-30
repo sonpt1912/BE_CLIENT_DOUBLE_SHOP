@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.dto.request;
 
+import com.example.be_customer_double_shop.entity.Address;
 import lombok.*;
 
 @AllArgsConstructor
@@ -10,6 +11,10 @@ import lombok.*;
 public class CustomerRequest {
 
     private String phone;
+
+    private String birthDay;
+
+    private Integer gender;
 
     private Integer status;
 
@@ -22,5 +27,7 @@ public class CustomerRequest {
     private String otp;
 
     private String password;
+
+    private Address address;
 
 }

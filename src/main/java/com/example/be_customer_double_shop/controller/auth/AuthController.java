@@ -48,7 +48,7 @@ public class AuthController {
     private MailService mailService;
 
     // forgot password
-    @PostMapping("/forgot-password")
+    @PostMapping("/send-top-forgot-password")
     public ResponseEntity forgotPassword(@RequestBody CustomerRequest request) {
         return new ResponseEntity(authService.forgotPasswrord(request), HttpStatus.OK);
     }
@@ -56,6 +56,11 @@ public class AuthController {
     @PostMapping("/reset-password")
     public ResponseEntity resetPassword(@RequestBody CustomerRequest request) {
         return new ResponseEntity(authService.resetPassword(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity register(@RequestBody CustomerRequest request) {
+        return new ResponseEntity(authService.register(request), HttpStatus.OK);
     }
 
     @PostMapping("/login")

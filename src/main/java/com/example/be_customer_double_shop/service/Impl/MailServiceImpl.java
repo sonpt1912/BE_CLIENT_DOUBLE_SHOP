@@ -38,12 +38,11 @@ public class MailServiceImpl implements MailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setFrom(sender, "DOUBLE SHOP");
+            helper.setTo(request.getEmail());
             helper.setSubject("THAY DOI MAT KHAU");
-
 
             Context context = new Context();
             context.setVariable("otp", request.getOtp());
-
             String template = templateEngine.process("forgot-password", context);
             helper.setText(template, true);
 
