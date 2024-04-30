@@ -69,8 +69,8 @@ public class AuthServiceImpl implements AuthService {
 
             Customer newCustomer = Customer.builder()
                     .email(userRequest.getEmail())
-                    .name(customer.getName())
-                    .username(customer.getEmail())
+                    .name(userRequest.getName())
+                    .username(userRequest.getEmail())
                     .password(passwordEncoder.encode(userRequest.getPassword()))
                     .createdBy(userRequest.getEmail())
                     .createdTime(DateUtil.dateToString4(new Date()))
@@ -81,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
             customerRepository.save(newCustomer);
 
             Address address = userRequest.getAddress();
-            address.setCustomer(customer);
+            address.setCustomer(newCustomer);
             address.setDefaul(Constant.isDefault);
             addressService.saveAddress(address);
             return Constant.SUCCESS;
