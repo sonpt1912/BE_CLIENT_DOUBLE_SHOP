@@ -24,10 +24,10 @@ spring:
       time-to-live: 3000
   data:
     redis:
-      host: redis-14407.c246.us-east-1-4.ec2.cloud.redislabs.com
-      port: 14407
+      host: redis-15543.c15.us-east-1-4.ec2.redns.redis-cloud.com
+      port: 15543
       username: default
-      password: qXVaFVpc4K1YA5lPpt1NtOdWg40XbL6Q
+      password: FhfRpzJbtaXPvypvC3AkSl2AFPaELZck
   mail:
     username: tuanbc25878@fpt.edu.vn
     password: zvcv zujv syxs nirm
