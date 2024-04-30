@@ -17,10 +17,14 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-
     @PostMapping("/get-all-by-condition")
     public ResponseEntity getAllByCondition(@RequestBody ProductRequest request) {
         return new ResponseEntity(productService.getByCondition(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/get-detail-product-by-product")
+    public ResponseEntity getDetailProductByProduct(@RequestBody ProductRequest request) {
+        return new ResponseEntity(productService.getDetailProductByProduct(null), HttpStatus.OK);
     }
 
     //TODO: get top 3 - theo cac loai du kien ( ban chay nhat, moi... )

@@ -94,13 +94,13 @@ public class BillServiceImpl implements BillService {
             billHistoryService.createBillHistory(billHistory);
 
             if (!StringUtil.stringIsNullOrEmty(billRequest.getIdVoucher())) {
-                Voucher vou = voucherService.getOneId(billRequest.getIdVoucher());
+                Voucher vou = voucherService.getOneById(billRequest.getIdVoucher());
                 int voucherQuantity = vou.getQuantity() - 1;
                 if (voucherQuantity == 0) {
                     vou.setStatus(Constant.IN_ACTIVE);
                 }
                 vou.setQuantity(voucherQuantity);
-                voucherService.update(vou, username);
+                voucherService.updateVoucher(vou, username);
             }
 
             // add cac san pham vao bill

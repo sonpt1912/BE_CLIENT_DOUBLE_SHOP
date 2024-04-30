@@ -9,6 +9,7 @@ import com.example.be_customer_double_shop.repository.OTPCacheRepository;
 import com.example.be_customer_double_shop.service.AuthService;
 import com.example.be_customer_double_shop.service.MailService;
 import com.example.be_customer_double_shop.util.Constant;
+import com.example.be_customer_double_shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Object forgotPasswrord(CustomerRequest userRequest) {
         Customer customer = customerRepository.findCustomerByEmail(userRequest.getEmail());
-        cacheRepository.save(new OTPCache(customer.getEmail(), "123456"));
-        userRequest.setOtp("123456");
+        String otp = StringUtil.generateString(6);
+        cacheRepository.save(new OTPCache(customer.getEmail(), otp));
+        userRequest.setOtp(otp);
         return mailService.sendOTP(userRequest);
     }
 }

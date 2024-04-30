@@ -1,8 +1,11 @@
 package com.example.be_customer_double_shop.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 public class StringUtil {
 
@@ -17,6 +20,15 @@ public class StringUtil {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateUtil.FORMAT_DATE_TIME4);
         String formattedTime = currentTime.format(formatter);
         return formattedTime;
+    }
+
+    public static String generateString(int length) {
+        String str = UUID.randomUUID().toString();
+        str = str.replaceAll("\\D", "");
+        if (str.length() < length) {
+            str = StringUtils.repeat("0", length - str.length()) + str;
+        }
+        return str.substring(0, length);
     }
 
     public static boolean stringIsNullOrEmty(String str) {

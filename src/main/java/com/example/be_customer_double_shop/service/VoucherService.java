@@ -10,4 +10,8 @@ public interface VoucherService {
 
     Voucher getByCode(String code);
 
+    Voucher getOneById(long id);
+
+    Voucher updateVoucher(Voucher voucher, String username);
+
 }

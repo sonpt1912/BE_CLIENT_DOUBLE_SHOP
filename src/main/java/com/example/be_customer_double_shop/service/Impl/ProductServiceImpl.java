@@ -36,10 +36,10 @@ public class ProductServiceImpl implements ProductService {
         str.append(" SELECT p.* FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
         str.append(" INNER JOIN size s ON dp.id_size = s.id ");
         str.append(" INNER JOIN color c ON dp.id_color = c.id ");
-        str.append(" INNER JOIN material m ON dp.id_material = m.id ");
-        str.append(" INNER JOIN category ct ON dp.id_category = ct.id ");
-        str.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
-        str.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
+        str.append(" INNER JOIN material m ON p.id_material = m.id ");
+        str.append(" INNER JOIN category ct ON p.id_category = ct.id ");
+        str.append(" INNER JOIN collar cl ON p.id_collar = cl.id ");
+        str.append(" INNER JOIN brand b ON p.id_brand = b.id ");
         str.append(" WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getIdProduct())) {
@@ -88,13 +88,13 @@ public class ProductServiceImpl implements ProductService {
         str.setLength(0);
         params.clear();
 
-        str.append(" SELECT COUNT(*) FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
+        str.append(" SELECT COUNT(p.id) FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
         str.append(" INNER JOIN size s ON dp.id_size = s.id ");
         str.append(" INNER JOIN color c ON dp.id_color = c.id ");
-        str.append(" INNER JOIN material m ON dp.id_material = m.id ");
-        str.append(" INNER JOIN category ct ON dp.id_category = ct.id ");
-        str.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
-        str.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
+        str.append(" INNER JOIN material m ON p.id_material = m.id ");
+        str.append(" INNER JOIN category ct ON p.id_category = ct.id ");
+        str.append(" INNER JOIN collar cl ON p.id_collar = cl.id ");
+        str.append(" INNER JOIN brand b ON p.id_brand = b.id ");
         str.append(" WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getIdProduct())) {
@@ -139,5 +139,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id).get();
+    }
+
+    @Override
+    public Object getDetailProductByProduct(ProductRequest request) {
+        return null;
     }
 }

@@ -29,8 +29,8 @@ spring:
       username: default
       password: qXVaFVpc4K1YA5lPpt1NtOdWg40XbL6Q
   mail:
-    username: sonptph25875@fpt.edu.vn
-    password: bkcl gwfc ompy kdcm
+    username: tuanbc25878@fpt.edu.vn
+    password: zvcv zujv syxs nirm
     port: 587
     host: smtp.gmail.com
     properties:
