@@ -12,6 +12,7 @@ import java.util.Map;
 @Configuration
 public class AppConfig {
 
+    @Value("${cloudiary.cloud_name}")
     private String cloudName;
 
 //    @Value("${cloudiary.api_key")
