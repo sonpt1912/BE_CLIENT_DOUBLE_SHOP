@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
             if (otpCache.getKey().equals(userRequest.getEmail()) && otpCache.getValue().equals(userRequest.getOtp())) {
                 Customer customer = customerRepository.findCustomerByEmail(userRequest.getEmail());
                 customer.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+                cacheRepository.delete(otpCache);
                 return customerRepository.save(customer);
             }
         } catch (Exception e) {
@@ -69,8 +70,8 @@ public class AuthServiceImpl implements AuthService {
 
             Customer newCustomer = Customer.builder()
                     .email(userRequest.getEmail())
-                    .name(customer.getName())
-                    .username(customer.getEmail())
+                    .name(userRequest.getName())
+                    .username(userRequest.getEmail())
                     .password(passwordEncoder.encode(userRequest.getPassword()))
                     .createdBy(userRequest.getEmail())
                     .createdTime(DateUtil.dateToString4(new Date()))
@@ -81,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
             customerRepository.save(newCustomer);
 
             Address address = userRequest.getAddress();
-            address.setCustomer(customer);
+            address.setCustomer(newCustomer);
             address.setDefaul(Constant.isDefault);
             addressService.saveAddress(address);
             return Constant.SUCCESS;

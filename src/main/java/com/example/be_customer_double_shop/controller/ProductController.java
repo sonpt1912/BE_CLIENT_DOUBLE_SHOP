@@ -19,7 +19,7 @@ public class ProductController {
 
     @PostMapping("/get-all-by-condition")
     public ResponseEntity getAllByCondition(@RequestBody ProductRequest request) {
-        return new ResponseEntity(productService.getByCondition(request), HttpStatus.OK);
+        return new ResponseEntity(productService.getAllByCondition(request), HttpStatus.OK);
     }
 
     @PostMapping("/get-detail-product-by-product")
@@ -30,7 +30,7 @@ public class ProductController {
     //TODO: get top 3 - theo cac loai du kien ( ban chay nhat, moi... )
     @PostMapping("/get-top-3-by-condition")
     public ResponseEntity getTop3ByConditioin(ProductRequest request) {
-        return new ResponseEntity(productService.getByCondition(request), HttpStatus.OK);
+        return new ResponseEntity(productService.getAllByCondition(request), HttpStatus.OK);
     }
 
 
