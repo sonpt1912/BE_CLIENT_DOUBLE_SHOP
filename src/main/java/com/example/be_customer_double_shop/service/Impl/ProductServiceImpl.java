@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Object getAllByCondition(ProductRequest request) {
+    public Object getAllByCondition(ProductRequest request)  throws Exception{
         ListResponse<Product> listResponse = (ListResponse<Product>) getByCondition(request);
         for (int i = 0; i < listResponse.getTotalRecord(); i++) {
             listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(i).getCode() + "/*").maxResults(500).execute());

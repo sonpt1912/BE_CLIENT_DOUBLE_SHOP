@@ -5,7 +5,7 @@ import com.example.be_customer_double_shop.entity.Product;
 
 public interface ProductService {
 
-    Object getAllByCondition(ProductRequest request);
+    Object getAllByCondition(ProductRequest request)  throws Exception;
 
     Product getProductById(Long id);
 
