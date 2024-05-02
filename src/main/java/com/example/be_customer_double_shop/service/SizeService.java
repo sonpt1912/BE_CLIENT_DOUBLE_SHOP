@@ -9,4 +9,6 @@ public interface SizeService {
 
     Object update(Size size);
 
+    Object getAllSize();
+
 }

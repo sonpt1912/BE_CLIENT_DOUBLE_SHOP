@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
             if (otpCache.getKey().equals(userRequest.getEmail()) && otpCache.getValue().equals(userRequest.getOtp())) {
                 Customer customer = customerRepository.findCustomerByEmail(userRequest.getEmail());
                 customer.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+                cacheRepository.delete(otpCache);
                 return customerRepository.save(customer);
             }
         } catch (Exception e) {

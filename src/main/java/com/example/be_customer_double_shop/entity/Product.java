@@ -29,6 +29,15 @@ public class Product {
     @Column(name = "weight")
     private Integer weight;
 
+    @Column(name = "height")
+    private Integer height;
+
+    @Column(name = "width")
+    private Integer width;
+
+    @Column(name = "length")
+    private Integer length;
+
     @Column(name = "status")
     private Integer status;
 

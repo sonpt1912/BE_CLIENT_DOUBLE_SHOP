@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.service.Impl;
 
+import com.cloudinary.Cloudinary;
 import com.example.be_customer_double_shop.dto.request.ProductRequest;
 import com.example.be_customer_double_shop.dto.response.ListResponse;
 import com.example.be_customer_double_shop.entity.Product;
@@ -21,12 +22,21 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private Cloudinary cloudinary;
+
     @PersistenceContext
     private EntityManager entityManager;
 
+    public Object getAllByCondition(ProductRequest request) {
+        ListResponse<Product> listResponse = (ListResponse<Product>) getByCondition(request);
+        for (int i = 0; i < listResponse.getTotalRecord(); i++) {
+            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(i).getCode() + "/*").maxResults(500).execute());
+        }
+        return listResponse;
+    }
 
-    @Override
-    public Object getByCondition(ProductRequest request) {
+    private Object getByCondition(ProductRequest request) {
 
         ListResponse<Product> listResponse = new ListResponse<>();
 

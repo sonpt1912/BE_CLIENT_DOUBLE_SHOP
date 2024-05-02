@@ -47,3 +47,10 @@ cloudiary:
 
 ghn:
   token: 81e2108c-e9c6-11ee-b1d4-92b443b7a897
+  shopId: 191482
+  url: https://dev-online-gateway.ghn.vn/shiip/public-api
+payos:
+  client_id: 2cfb9e5e-5c45-40cd-b4d5-01fd6004ad91
+  api_key: f12e17b4-1ee6-4280-a044-51e97178b6c5
+  checksum_key: 3dae4252bb8463b177bf145fc7c5c3a5e960d72e7483352287cba46770439c5f
+  base_url: https://api-merchant.payos.vn/v2/payment-requests
