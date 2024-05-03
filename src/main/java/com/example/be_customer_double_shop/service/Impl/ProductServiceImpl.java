@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
             str.append(" AND cl.id = :idCollar ");
-            params.put("idCollar", request.getIdProduct());
+            params.put("idCollar", request.getIdCollar());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
             str.append(" AND s.id = :idSize ");
@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
             str.append(" AND cl.id = :idCollar ");
-            params.put("idCollar", request.getIdProduct());
+            params.put("idCollar", request.getIdCollar());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
             str.append(" AND s.id = :idSize ");
