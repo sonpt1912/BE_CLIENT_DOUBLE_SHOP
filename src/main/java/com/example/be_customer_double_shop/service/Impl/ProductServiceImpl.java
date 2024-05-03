@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
             str.append(" AND s.id = :idSize ");
-            params.put("idSize", request.getIdProduct());
+            params.put("idSize", request.getIdSize());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
             str.append(" AND m.id = :idMaterial ");
@@ -133,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
             str.append(" AND s.id = :idSize ");
-            params.put("idSize", request.getIdProduct());
+            params.put("idSize", request.getIdSize());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
             str.append(" AND m.id = :idMaterial ");
