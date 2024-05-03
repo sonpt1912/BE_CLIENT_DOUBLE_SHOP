@@ -57,32 +57,32 @@ public class ProductServiceImpl implements ProductService {
         str.append(" WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getIdProduct())) {
-            str.append(" AND p.id = :id ");
-            params.put("id", request.getIdProduct());
+            str.append(" AND p.id = :idProduct ");
+            params.put("idProduct", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
-            str.append(" AND b.id = :id ");
-            params.put("id", request.getIdBrand());
+            str.append(" AND b.id = :idBrand ");
+            params.put("idBrand", request.getIdBrand());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
-            str.append(" AND ct.id = :id ");
-            params.put("id", request.getIdCategory());
+            str.append(" AND ct.id = :idCategory ");
+            params.put("idCategory", request.getIdCategory());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdColor())) {
-            str.append(" AND c.id = :id ");
-            params.put("id", request.getIdColor());
+            str.append(" AND c.id = :idColor ");
+            params.put("idColor", request.getIdColor());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
-            str.append(" AND cl.id = :id ");
-            params.put("id", request.getIdProduct());
+            str.append(" AND cl.id = :idCollar ");
+            params.put("idCollar", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
-            str.append(" AND s.id = :id ");
-            params.put("id", request.getIdProduct());
+            str.append(" AND s.id = :idSize ");
+            params.put("idSize", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
-            str.append(" AND m.id = :id ");
-            params.put("id", request.getIdMaterial());
+            str.append(" AND m.id = :idMaterial ");
+            params.put("idMaterial", request.getIdMaterial());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
@@ -112,32 +112,32 @@ public class ProductServiceImpl implements ProductService {
         str.append(" WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getIdProduct())) {
-            str.append(" AND p.id = :id ");
-            params.put("id", request.getIdProduct());
+            str.append(" AND p.id = :idProduct ");
+            params.put("idProduct", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
-            str.append(" AND b.id = :id ");
-            params.put("id", request.getIdBrand());
+            str.append(" AND b.id = :idBrand ");
+            params.put("idBrand", request.getIdBrand());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
-            str.append(" AND ct.id = :id ");
-            params.put("id", request.getIdCategory());
+            str.append(" AND ct.id = :idCategory ");
+            params.put("idCategory", request.getIdCategory());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdColor())) {
-            str.append(" AND c.id = :id ");
-            params.put("id", request.getIdColor());
+            str.append(" AND c.id = :idColor ");
+            params.put("idColor", request.getIdColor());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
-            str.append(" AND cl.id = :id ");
-            params.put("id", request.getIdProduct());
+            str.append(" AND cl.id = :idCollar ");
+            params.put("idCollar", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
-            str.append(" AND s.id = :id ");
-            params.put("id", request.getIdProduct());
+            str.append(" AND s.id = :idSize ");
+            params.put("idSize", request.getIdProduct());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
-            str.append(" AND m.id = :id ");
-            params.put("id", request.getIdMaterial());
+            str.append(" AND m.id = :idMaterial ");
+            params.put("idMaterial", request.getIdMaterial());
         }
 
         Query queryCount = entityManager.createNativeQuery(str.toString());
