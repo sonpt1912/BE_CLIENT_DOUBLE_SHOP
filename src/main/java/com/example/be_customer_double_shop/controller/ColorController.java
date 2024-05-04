@@ -7,17 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Service
+@RestController
 @RequestMapping("/color")
 public class ColorController {
 
     @Autowired
     private ColorService colorService;
 
-    @GetMapping("/")
+    @GetMapping("/get-all-color")
     public ResponseEntity getAllColor() {
-        return new ResponseEntity(null, HttpStatus.OK);
+        return new ResponseEntity(colorService.getAllByStatus(), HttpStatus.OK);
     }
 
 }
