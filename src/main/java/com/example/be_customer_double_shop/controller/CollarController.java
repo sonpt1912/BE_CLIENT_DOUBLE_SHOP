@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/collar")
+@RequestMapping("/public/collar")
 public class CollarController {
 
     @Autowired
