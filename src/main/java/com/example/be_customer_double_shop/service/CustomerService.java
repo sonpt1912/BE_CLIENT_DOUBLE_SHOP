@@ -12,6 +12,8 @@ public interface CustomerService {
 
     Object createCustomer(Customer customer);
 
-    Object updateCustomer(Customer customer);
+    Object updateCustomer(Customer customer, String username);
+
+    Object updatePassword(Customer customer, String username);
 
 }

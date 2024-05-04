@@ -1,12 +1,15 @@
 package com.example.be_customer_double_shop.service.Impl;
 
+import com.example.be_customer_double_shop.dto.ValidationException;
 import com.example.be_customer_double_shop.entity.Customer;
 import com.example.be_customer_double_shop.repository.CustomerRepository;
 import com.example.be_customer_double_shop.service.CustomerService;
+import com.example.be_customer_double_shop.util.Constant;
 import com.example.be_customer_double_shop.util.DateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,6 +24,9 @@ public class CusmerServiceImpl implements CustomerService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -44,9 +50,24 @@ public class CusmerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Object updateCustomer(Customer customer) {
-        customer.setUpdatedBy(customer.getUsername());
-        customer.setUpdatedTime(DateUtil.dateToString4(new Date()));
-        return customerRepository.save(customer);
+    public Object updateCustomer(Customer customer, String username) {
+        Customer custom = customerRepository.findCustomerByUsername(username);
+        custom.setPhone(customer.getPhone());
+        custom.setName(customer.getName());
+        custom.setBirthDay(customer.getBirthDay());
+        custom.setPhone(customer.getPhone());
+        custom.setUpdatedBy(customer.getUsername());
+        custom.setUpdatedTime(DateUtil.dateToString4(new Date()));
+        return customerRepository.save(custom);
+    }
+
+    @Override
+    public Object updatePassword(Customer customer, String username) {
+        Customer custom = customerRepository.findCustomerByUsername(username);
+        if (passwordEncoder.matches(customer.getPassword(), custom.getPassword())) {
+            custom.setPassword(passwordEncoder.encode(customer.getNewPassword()));
+            return customerRepository.save(custom);
+        }
+        throw new ValidationException(Constant.API001, "password cu khong chinh xac");
     }
 }

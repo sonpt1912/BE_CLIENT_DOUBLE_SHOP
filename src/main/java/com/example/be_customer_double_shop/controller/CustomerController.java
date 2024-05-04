@@ -31,8 +31,9 @@ public class CustomerController {
     }
 
     @PostMapping("/update-user-infor")
-    public ResponseEntity getUserinfo(@RequestBody Customer customer) {
-        return new ResponseEntity(customerService.updateCustomer(customer), HttpStatus.OK);
+    public ResponseEntity getUserinfo(@RequestBody Customer customer, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(customerService.updateCustomer(customer, username), HttpStatus.OK);
     }
 
     // xoa address
@@ -41,8 +42,10 @@ public class CustomerController {
         return new ResponseEntity(addressService, HttpStatus.OK);
     }
 
-
-    // update address
-
+    @PostMapping("/update-password")
+    public ResponseEntity updatePassword(@RequestBody Customer customer, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(customerService.updatePassword(customer, username), HttpStatus.OK);
+    }
 
 }
