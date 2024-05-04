@@ -32,6 +32,7 @@ public class CustomerController {
 
     @PostMapping("/update-user-infor")
     public ResponseEntity getUserinfo(@RequestBody Customer customer) {
+
         return new ResponseEntity(customerService.updateCustomer(customer), HttpStatus.OK);
     }
 
@@ -44,8 +45,15 @@ public class CustomerController {
 
     // update address
     @GetMapping("/get-all-address")
-    public ResponseEntity getAll(@RequestParam Long id){
-        return new ResponseEntity(addressService.getAllByIdCustomer(id),HttpStatus.OK);
+    public ResponseEntity getAll(@RequestParam Long id) {
+        return new ResponseEntity(addressService.getAllByIdCustomer(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity updatePassword(@RequestBody Customer customer, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(customerService.updatePassword(customer, username), HttpStatus.OK);
+
     }
 
 }

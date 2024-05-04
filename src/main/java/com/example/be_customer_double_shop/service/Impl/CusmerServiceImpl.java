@@ -1,14 +1,20 @@
 package com.example.be_customer_double_shop.service.Impl;
 
+
 import com.example.be_customer_double_shop.entity.Address;
+
+import com.example.be_customer_double_shop.dto.ValidationException;
+
 import com.example.be_customer_double_shop.entity.Customer;
 import com.example.be_customer_double_shop.repository.CustomerRepository;
 import com.example.be_customer_double_shop.service.CustomerService;
+import com.example.be_customer_double_shop.util.Constant;
 import com.example.be_customer_double_shop.util.DateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,6 +29,9 @@ public class CusmerServiceImpl implements CustomerService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -53,7 +62,7 @@ public class CusmerServiceImpl implements CustomerService {
 
             // Nếu tồn tại một khách hàng khác có cùng username, trả về null hoặc một giá trị đại diện cho lỗi
             if (existingCustomer != null && !existingCustomer.getId().equals(customer.getId())) {
-                return null; // hoặc throw một Exception nếu bạn muốn xử lý lỗi ở phía gọi
+                throw new IllegalArgumentException("Username already exists");
             }
 
             // Cập nhật thông tin của khách hàng
@@ -63,8 +72,32 @@ public class CusmerServiceImpl implements CustomerService {
             return customerRepository.save(customer);
         } catch (NonUniqueResultException e) {
             // Xử lý lỗi ở đây nếu cần
-            return null; // hoặc throw một Exception nếu bạn muốn xử lý lỗi ở phía gọi
+            throw new IllegalArgumentException("Error updating customer", e);
         }
+    }
+
+
+
+//    public Object updateCustomer(Customer customer, String username) {
+//        Customer custom = customerRepository.findCustomerByUsername(username);
+//        custom.setPhone(customer.getPhone());
+//        custom.setName(customer.getName());
+//        custom.setBirthDay(customer.getBirthDay());
+//        custom.setPhone(customer.getPhone());
+//        custom.setUpdatedBy(customer.getUsername());
+//        custom.setUpdatedTime(DateUtil.dateToString4(new Date()));
+//        return customerRepository.save(custom);
+//    }
+
+    @Override
+    public Object updatePassword(Customer customer, String username) {
+        Customer custom = customerRepository.findCustomerByUsername(username);
+        if (passwordEncoder.matches(customer.getPassword(), custom.getPassword())) {
+            custom.setPassword(passwordEncoder.encode(customer.getNewPassword()));
+            return customerRepository.save(custom);
+        }
+        throw new ValidationException(Constant.API001, "password cu khong chinh xac");
+
     }
 
 

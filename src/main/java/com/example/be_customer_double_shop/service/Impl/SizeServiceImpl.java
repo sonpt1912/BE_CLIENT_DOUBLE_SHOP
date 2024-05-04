@@ -3,6 +3,7 @@ package com.example.be_customer_double_shop.service.Impl;
 import com.example.be_customer_double_shop.entity.Size;
 import com.example.be_customer_double_shop.repository.SizeRepository;
 import com.example.be_customer_double_shop.service.SizeService;
+import com.example.be_customer_double_shop.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,6 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public Object getAllSize() {
-        return sizeRepository.getAllSizes();
+        return sizeRepository.getAllSizes(Constant.ACTIVE);
     }
 }
