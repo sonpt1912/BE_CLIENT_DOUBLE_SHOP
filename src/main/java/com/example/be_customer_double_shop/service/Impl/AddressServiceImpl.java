@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -20,5 +21,10 @@ public class AddressServiceImpl implements AddressService {
         address.setCreatedBy(address.getCustomer().getName());
         address.setCreatedTime(DateUtil.dateToString4(new Date()));
         return addressRepository.save(address);
+    }
+
+    @Override
+    public List<Address> getAllByIdCustomer(Long idCustomer) {
+        return addressRepository.findAddressByCustomerId(idCustomer);
     }
 }

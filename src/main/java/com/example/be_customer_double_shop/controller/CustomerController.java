@@ -43,6 +43,9 @@ public class CustomerController {
 
 
     // update address
-
+    @GetMapping("/get-all-address")
+    public ResponseEntity getAll(@RequestParam Long id){
+        return new ResponseEntity(addressService.getAllByIdCustomer(id),HttpStatus.OK);
+    }
 
 }
