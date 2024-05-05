@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.controller;
 
+import com.example.be_customer_double_shop.entity.Address;
 import com.example.be_customer_double_shop.entity.Customer;
 import com.example.be_customer_double_shop.security.JwtProvider;
 import com.example.be_customer_double_shop.service.AddressService;
@@ -38,8 +39,18 @@ public class CustomerController {
 
     // xoa address
     @PostMapping("/delete-address")
-    public ResponseEntity deleteAddress() {
-        return new ResponseEntity(addressService, HttpStatus.OK);
+    public ResponseEntity deleteAddress(@RequestBody Address address) {
+        return new ResponseEntity(addressService.deleteAddress(address), HttpStatus.OK);
+    }
+
+    @PostMapping("/create-address")
+    public ResponseEntity createAddress(@RequestBody Address address) {
+        return new ResponseEntity(addressService.saveAddress(address), HttpStatus.OK);
+    }
+
+    @PostMapping("/update-address")
+    public ResponseEntity updateAddress(@RequestBody Address address) {
+        return new ResponseEntity(addressService.updateAddress(address), HttpStatus.OK);
     }
 
     @PostMapping("/update-password")

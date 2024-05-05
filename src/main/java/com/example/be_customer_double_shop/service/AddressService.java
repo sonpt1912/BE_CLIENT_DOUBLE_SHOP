@@ -7,4 +7,10 @@ public interface AddressService {
 
     Address saveAddress(Address address);
 
+    String deleteAddress(Address address);
+
+    Address updateAddress(Address address);
+
+    Address getAddressById(long id);
+
 }
