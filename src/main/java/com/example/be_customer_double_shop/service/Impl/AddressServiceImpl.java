@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -43,5 +44,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address getAddressById(long id) {
         return addressRepository.getAddressById(id);
+    }
+
+    @Override
+    public List<Address> getAllByIdCustomer(long id) {
+        return addressRepository.getAllByCustomerId(id);
     }
 }
