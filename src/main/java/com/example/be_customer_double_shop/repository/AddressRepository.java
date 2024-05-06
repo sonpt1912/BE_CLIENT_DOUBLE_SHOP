@@ -10,6 +10,10 @@ import java.util.List;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
-    @Query(value = "SELECT * FROM Address WHERE id_customer = :id",nativeQuery = true)
-    List<Address> findAddressByCustomerId(@Param("id") Long idCustomer);
+
+    @Query(value = "SELECT a FROM Address a WHERE a.id = :id")
+    Address getAddressById(@Param("id") long id);
+
+    @Query(value = "SELECT a FROM Address a WHERE a.customer.id = :id")
+    List<Address> getAllByCustomerId(long id);
 }

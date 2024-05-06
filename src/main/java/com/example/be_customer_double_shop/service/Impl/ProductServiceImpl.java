@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Object getAllByCondition(ProductRequest request)  throws Exception{
+    public Object getAllByCondition(ProductRequest request) throws Exception {
         ListResponse<Product> listResponse = (ListResponse<Product>) getByCondition(request);
         int totalRecord = listResponse.getTotalRecord();
         if (request.getPageSize() < listResponse.getTotalRecord()) {
@@ -151,12 +151,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).get();
+    public Product getProductById(long id) {
+        return productRepository.getProductById(id);
     }
 
     @Override
     public Object getDetailProductByProduct(ProductRequest request) {
         return null;
     }
+
+    @Override
+    public Product getProduct(long id) throws Exception {
+        Product product = this.getProductById(id);
+        product.setListImages(cloudinary.search().expression("folder:double_shop/product/" + product.getCode() + "/*").maxResults(500).execute());
+        return product;
+    }
+
+
 }

@@ -7,8 +7,10 @@ public interface ProductService {
 
     Object getAllByCondition(ProductRequest request)  throws Exception;
 
-    Product getProductById(Long id);
+    Product getProductById(long id);
 
     Object getDetailProductByProduct(ProductRequest request);
+
+    Product getProduct(long id) throws Exception;
 
 }
