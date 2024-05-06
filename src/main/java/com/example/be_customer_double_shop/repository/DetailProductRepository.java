@@ -39,4 +39,8 @@ public interface DetailProductRepository extends JpaRepository<DetailProduct, Lo
             " WHERE dt.product.id = :id AND (dt.status = 0 AND  p.status = 0 OR p.status IS NULL) ")
     List<DetailProductDao> getAllDetailProduct(@Param("id") Long id);
 
+
+    @Query(value = "SELECT dt FROM DetailProduct dt WHERE dt.color.id = :idColor AND dt.size.id = :idSize AND dt.product.id = :idProduct ")
+    DetailProduct getDetailProductByColorAndSizeAndProduct(@Param("idColor") long idColor, @Param("idSize") long idSize, @Param("idProduct") long idProduct);
+
 }

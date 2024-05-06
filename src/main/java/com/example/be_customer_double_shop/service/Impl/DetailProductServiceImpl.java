@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.service.Impl;
 
+import com.example.be_customer_double_shop.dto.request.ProductRequest;
 import com.example.be_customer_double_shop.entity.DetailProduct;
 import com.example.be_customer_double_shop.repository.DetailProductRepository;
 import com.example.be_customer_double_shop.service.DetailProductService;
@@ -42,5 +43,11 @@ public class DetailProductServiceImpl implements DetailProductService {
     public Object updateAllDetailPro(List<DetailProduct> list) {
         return detailProductRepository.saveAll(list);
     }
+
+    @Override
+    public DetailProduct getDetailProductByColorSizeAndProduct(ProductRequest productRequest) {
+        return detailProductRepository.getDetailProductByColorAndSizeAndProduct(productRequest.getIdColor(), productRequest.getIdSize(), productRequest.getIdProduct());
+    }
+
 
 }
