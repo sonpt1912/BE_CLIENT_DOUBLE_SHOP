@@ -5,6 +5,7 @@ import com.example.be_customer_double_shop.entity.Customer;
 import com.example.be_customer_double_shop.security.JwtProvider;
 import com.example.be_customer_double_shop.service.AddressService;
 import com.example.be_customer_double_shop.service.CustomerService;
+import com.example.be_customer_double_shop.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,9 @@ public class CustomerController {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private VoucherService voucherService;
 
 
     @PostMapping("/user-info")
@@ -53,7 +57,6 @@ public class CustomerController {
         return new ResponseEntity(addressService.updateAddress(address), HttpStatus.OK);
     }
 
-
     // update address
     @GetMapping("/get-all-address")
     public ResponseEntity getAll(@RequestParam Long id) {
@@ -66,5 +69,18 @@ public class CustomerController {
         return new ResponseEntity(customerService.updatePassword(customer, username), HttpStatus.OK);
 
     }
+
+    // get voucher
+    @PostMapping("/get-voucher-by-user-login")
+    public ResponseEntity getVoucherByUserLogin(@RequestHeader("Authorization") String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(voucherService.getAllVoucherByUserLogin(username), HttpStatus.OK);
+    }
+
+    @PostMapping("/get-voucher-by-code")
+    public ResponseEntity getVoucherbyCode(@RequestBody String code) {
+        return new ResponseEntity(voucherService.getByCode(code), HttpStatus.OK);
+    }
+
 
 }
