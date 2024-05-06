@@ -67,7 +67,6 @@ public class CustomerController {
     public ResponseEntity updatePassword(@RequestBody Customer customer, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(customerService.updatePassword(customer, username), HttpStatus.OK);
-
     }
 
     // get voucher

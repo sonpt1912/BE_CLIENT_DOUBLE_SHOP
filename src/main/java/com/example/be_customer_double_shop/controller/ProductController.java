@@ -1,6 +1,7 @@
 package com.example.be_customer_double_shop.controller;
 
 import com.example.be_customer_double_shop.dto.request.ProductRequest;
+import com.example.be_customer_double_shop.service.DetailProductService;
 import com.example.be_customer_double_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private DetailProductService detailProductService;
+
     @PostMapping("/get-all-by-condition")
     public ResponseEntity getAllByCondition(@RequestBody ProductRequest request) throws Exception {
         return new ResponseEntity(productService.getAllByCondition(request), HttpStatus.OK);
@@ -28,6 +32,11 @@ public class ProductController {
     @GetMapping("/get-product")
     public ResponseEntity getProduct(@Param("id") long id) throws Exception {
         return new ResponseEntity(productService.getProduct(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/get-detail-product")
+    public ResponseEntity getDetailProduct(@RequestBody ProductRequest request) {
+        return new ResponseEntity(detailProductService.getDetailProductByColorSizeAndProduct(request), HttpStatus.OK);
     }
 
     //TODO: get top 3 - theo cac loai du kien ( ban chay nhat, moi... )
