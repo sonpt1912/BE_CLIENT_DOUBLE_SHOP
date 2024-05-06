@@ -32,7 +32,12 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address updateAddress(Address address) {
-        return null;
+        Address add = this.getAddressById(address.getId());
+        add.setCity(address.getCity());
+        add.setProvince(address.getProvince());
+        add.setDistrict(address.getDistrict());
+        add.setDescription(address.getDescription());
+        return addressRepository.save(add);
     }
 
     @Override
