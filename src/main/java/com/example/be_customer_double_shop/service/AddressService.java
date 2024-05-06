@@ -9,6 +9,12 @@ public interface AddressService {
 
     Address saveAddress(Address address);
 
-    List<Address> getAllByIdCustomer(Long idCustomer);
+    String deleteAddress(Address address);
+
+    Address updateAddress(Address address);
+
+    Address getAddressById(long id);
+
+    List<Address> getAllByIdCustomer(long id);
 
 }
