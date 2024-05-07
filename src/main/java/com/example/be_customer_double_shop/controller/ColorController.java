@@ -19,7 +19,7 @@ public class ColorController {
         return new ResponseEntity(colorService.getAllByStatus(), HttpStatus.OK);
     }
 
-    @PostMapping("/get-by-color-by-condition")
+    @PostMapping("/get-all-color-by-condition")
     public ResponseEntity getAllByCondition(@RequestBody ColorRequest colorRequest) {
         return new ResponseEntity(colorService.getAllByCondition(colorRequest), HttpStatus.OK);
     }

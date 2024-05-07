@@ -14,6 +14,4 @@ public interface ProductService {
 
     Product getProduct(long id) throws Exception;
 
-    DetailProduct getDetailProduct(ProductRequest request);
-
 }

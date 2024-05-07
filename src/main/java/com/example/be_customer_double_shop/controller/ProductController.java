@@ -26,7 +26,7 @@ public class ProductController {
 
     @PostMapping("/get-detail-product-by-product")
     public ResponseEntity getDetailProductByProduct(@RequestBody ProductRequest request) {
-        return new ResponseEntity(productService.getDetailProductByProduct(null), HttpStatus.OK);
+        return new ResponseEntity(productService.getDetailProductByProduct(request), HttpStatus.OK);
     }
 
     @GetMapping("/get-product")
