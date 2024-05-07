@@ -34,10 +34,9 @@ public class SizeServiceImpl implements SizeService {
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append("SELECT s.* FROM size s INNER JOIN detail_product dp on s.id = dp.id_color ");
+        sql.append("SELECT s.* FROM size s INNER JOIN detail_product dp on s.id = dp.id_size ");
         sql.append("INNER JOIN product p on p.id = dp.id_product ");
         sql.append("WHERE dp.status = 0 ");
-
         sql.append("AND dp.id_product = :idProduct ");
         params.put("idProduct", sizeRequest.getIdProduct());
 
