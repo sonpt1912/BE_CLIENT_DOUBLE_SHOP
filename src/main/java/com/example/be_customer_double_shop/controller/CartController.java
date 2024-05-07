@@ -1,14 +1,13 @@
 package com.example.be_customer_double_shop.controller;
 
+import com.example.be_customer_double_shop.dto.request.CartRequest;
 import com.example.be_customer_double_shop.entity.Cart;
+import com.example.be_customer_double_shop.security.JwtProvider;
 import com.example.be_customer_double_shop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart")
@@ -17,6 +16,8 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @PostMapping("/delete-product-from-cart")
     public ResponseEntity deleteProductFromCart(@RequestBody Cart cart) {
@@ -29,8 +30,14 @@ public class CartController {
     }
 
     @PostMapping("/add-product-to-cart")
-    public ResponseEntity addProductToCart(@RequestBody Cart cart) {
-        return new ResponseEntity(cartService.save(cart), HttpStatus.OK);
+    public ResponseEntity addProductToCart(@RequestBody CartRequest request, @RequestHeader("Authorization") String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(cartService.createCart(request, username), HttpStatus.OK);
+    }
+
+    @PostMapping("/update-cart")
+    public ResponseEntity updateCart(@RequestBody CartRequest request) {
+        return new ResponseEntity(cartService.updateCart(request), HttpStatus.OK);
     }
 
 
