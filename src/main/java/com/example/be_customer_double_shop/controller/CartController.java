@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/cart")
 public class CartController {
@@ -25,8 +27,9 @@ public class CartController {
     }
 
     @PostMapping("/get-product-from-cart")
-    public ResponseEntity getProductFromCart(@RequestBody Cart cart) {
-        return new ResponseEntity(null, HttpStatus.OK);
+    public ResponseEntity getProductFromCart(@RequestHeader("Authorization") String token) throws ExecutionException, InterruptedException {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(cartService.getAllProductFromCart(username), HttpStatus.OK);
     }
 
     @PostMapping("/add-product-to-cart")
