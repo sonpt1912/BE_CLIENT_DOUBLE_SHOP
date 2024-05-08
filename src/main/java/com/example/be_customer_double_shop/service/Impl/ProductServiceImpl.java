@@ -3,7 +3,6 @@ package com.example.be_customer_double_shop.service.Impl;
 import com.cloudinary.Cloudinary;
 import com.example.be_customer_double_shop.dto.request.ProductRequest;
 import com.example.be_customer_double_shop.dto.response.ListResponse;
-import com.example.be_customer_double_shop.entity.DetailProduct;
 import com.example.be_customer_double_shop.entity.Product;
 import com.example.be_customer_double_shop.repository.ProductRepository;
 import com.example.be_customer_double_shop.service.DetailProductService;
@@ -158,7 +157,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object getDetailProductByProduct(ProductRequest request) {
-        return null;
+        return detailProductService.getDetailProductByColorSizeAndProduct(request);
     }
 
     @Override
@@ -166,11 +165,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = this.getProductById(id);
         product.setListImages(cloudinary.search().expression("folder:double_shop/product/" + product.getCode() + "/*").maxResults(500).execute());
         return product;
-    }
-
-    @Override
-    public DetailProduct getDetailProduct(ProductRequest request) {
-        return null;
     }
 
 
