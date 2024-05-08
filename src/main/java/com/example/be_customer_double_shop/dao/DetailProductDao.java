@@ -8,6 +8,8 @@ public interface DetailProductDao {
 
     Color getColor();
 
+    String getName();
+
     Product getProduct();
 
     Size getSize();

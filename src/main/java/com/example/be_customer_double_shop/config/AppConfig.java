@@ -8,6 +8,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 public class AppConfig {
@@ -39,4 +41,10 @@ public class AppConfig {
         config.put("secure", secure);
         return new Cloudinary(config);
     }
+
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(10);
+    }
+
 }
