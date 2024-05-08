@@ -82,12 +82,12 @@ public class CartServiceImpl implements CartService {
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", dt.getId());
                 map.put("color", dt.getColor());
-                map.put("name", dt.getName());
+                map.put("product", dt.getProduct());
                 map.put("size", dt.getSize());
                 map.put("quantity", dt.getQuantity());
                 map.put("price", dt.getPrice());
                 map.put("discountAmount", dt.getDiscountAmount());
-                map.put("listImages", cloudinary.search().expression("folder:double_shop/product/" + dt.getProduct().getCode() + "/*").maxResults(500).execute());
+//                map.put("listImages", cloudinary.search().expression("folder:double_shop/product/" + dt.getProduct().getCode() + "/*").maxResults(500).execute());
                 return map;
             };
             callableList.add(callable);
