@@ -6,6 +6,7 @@ import com.example.be_customer_double_shop.entity.Address;
 import java.util.List;
 
 public interface AddressService {
+    Address add(Address ad,String username);
 
     Address saveAddress(Address address);
 

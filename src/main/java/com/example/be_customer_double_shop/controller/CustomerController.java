@@ -2,9 +2,12 @@ package com.example.be_customer_double_shop.controller;
 
 import com.example.be_customer_double_shop.entity.Address;
 import com.example.be_customer_double_shop.entity.Customer;
+import com.example.be_customer_double_shop.repository.CustomerRepository;
 import com.example.be_customer_double_shop.security.JwtProvider;
 import com.example.be_customer_double_shop.service.AddressService;
 import com.example.be_customer_double_shop.service.CustomerService;
+import com.example.be_customer_double_shop.service.Impl.AddressServiceImpl;
+import com.example.be_customer_double_shop.service.Impl.CusmerServiceImpl;
 import com.example.be_customer_double_shop.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +29,16 @@ public class CustomerController {
     private AddressService addressService;
 
     @Autowired
+    private AddressServiceImpl addressServiceImpl;
+
+    @Autowired
     private VoucherService voucherService;
+
+    @Autowired
+    private CusmerServiceImpl cusmerServiceImpl;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
 
     @PostMapping("/user-info")
@@ -48,8 +60,9 @@ public class CustomerController {
     }
 
     @PostMapping("/create-address")
-    public ResponseEntity createAddress(@RequestBody Address address) {
-        return new ResponseEntity(addressService.saveAddress(address), HttpStatus.OK);
+    public ResponseEntity createAddress(@RequestBody Address address,@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(addressService.add(address,username), HttpStatus.OK);
     }
 
     @PostMapping("/update-address")
@@ -59,9 +72,12 @@ public class CustomerController {
 
     // update address
     @GetMapping("/get-all-address")
-    public ResponseEntity getAll(@RequestParam Long id) {
-        return new ResponseEntity(addressService.getAllByIdCustomer(id), HttpStatus.OK);
+    public ResponseEntity getAll(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        Customer customer=customerRepository.findCustomerByUsername(username);
+        return new ResponseEntity(addressService.getAllByIdCustomer(customer.getId()), HttpStatus.OK);
     }
+
 
     @PostMapping("/update-password")
     public ResponseEntity updatePassword(@RequestBody Customer customer, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
@@ -79,6 +95,16 @@ public class CustomerController {
     @PostMapping("/get-voucher-by-code")
     public ResponseEntity getVoucherbyCode(@RequestBody String code) {
         return new ResponseEntity(voucherService.getByCode(code), HttpStatus.OK);
+    }
+
+    @PostMapping("/update-other-addresses")
+    public ResponseEntity<String> updateOtherAddresses(@RequestBody Address address) {
+        try {
+            cusmerServiceImpl.updateOtherAddresses(address.getId());
+            return ResponseEntity.ok("Cập nhật thành công!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật các bản ghi khác: " + e.getMessage());
+        }
     }
 
 

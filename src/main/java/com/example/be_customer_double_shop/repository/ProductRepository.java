@@ -18,4 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT p FROM Product p WHERE p.id = :idProduct")
     Product getProductById(@Param("idProduct") long id);
 
+    @Query(value = "SELECT p.* FROM Product p JOIN Favorite f ON p.id = f.id_product WHERE f.id_customer = :id", nativeQuery = true)
+    List<Product> findByCustomerId(@Param("id") Long id);
+
 }

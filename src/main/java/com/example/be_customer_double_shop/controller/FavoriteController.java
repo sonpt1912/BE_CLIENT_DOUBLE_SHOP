@@ -1,7 +1,9 @@
 package com.example.be_customer_double_shop.controller;
 
 import com.example.be_customer_double_shop.dto.request.FavoriteRequest;
+import com.example.be_customer_double_shop.entity.Customer;
 import com.example.be_customer_double_shop.entity.Favorite;
+import com.example.be_customer_double_shop.repository.CustomerRepository;
 import com.example.be_customer_double_shop.security.JwtProvider;
 import com.example.be_customer_double_shop.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class FavoriteController {
     private FavoriteService favoriteService;
 
     @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private JwtProvider jwtProvider;
 
     @PostMapping("/add-favorte")
@@ -28,6 +33,13 @@ public class FavoriteController {
     public ResponseEntity deleteFavorite(@RequestBody Favorite favorite) {
         return ResponseEntity.ok(favoriteService.deleteFavortite(favorite));
     }
+    @PostMapping("/get-all-by-id-customer")
+    public ResponseEntity getAllByIdCustomer(@RequestHeader("Authorization") String token) throws Exception {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return ResponseEntity.ok(favoriteService.getByCustomerId(username));
+    }
+
+
 
 
 }

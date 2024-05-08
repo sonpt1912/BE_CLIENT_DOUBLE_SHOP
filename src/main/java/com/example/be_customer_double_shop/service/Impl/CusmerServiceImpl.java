@@ -16,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -92,6 +93,11 @@ public class CusmerServiceImpl implements CustomerService {
         }
         throw new ValidationException(Constant.API001, "password cu khong chinh xac");
 
+    }
+
+    @Transactional
+    public void updateOtherAddresses(Long id) {
+        customerRepository.updateOtherAddresses(id);
     }
 
 
