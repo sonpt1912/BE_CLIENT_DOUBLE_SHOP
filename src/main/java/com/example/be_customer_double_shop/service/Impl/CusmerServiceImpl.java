@@ -16,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -58,12 +59,6 @@ public class CusmerServiceImpl implements CustomerService {
     public Customer updateCustomer(Customer customer) {
         try {
             // Kiểm tra xem username mới đã tồn tại chưa
-            Customer existingCustomer = customerRepository.findCustomerByUsername(customer.getUsername());
-
-            // Nếu tồn tại một khách hàng khác có cùng username, trả về null hoặc một giá trị đại diện cho lỗi
-            if (existingCustomer != null && !existingCustomer.getId().equals(customer.getId())) {
-                throw new IllegalArgumentException("Username already exists");
-            }
 
             // Cập nhật thông tin của khách hàng
             customer.setUpdatedBy(customer.getUsername());
@@ -92,12 +87,17 @@ public class CusmerServiceImpl implements CustomerService {
     @Override
     public Object updatePassword(Customer customer, String username) {
         Customer custom = customerRepository.findCustomerByUsername(username);
-        if (passwordEncoder.matches(customer.getPassword(), custom.getPassword())) {
-            custom.setPassword(passwordEncoder.encode(customer.getNewPassword()));
+        if (passwordEncoder.matches(customer.getPassword().trim(), custom.getPassword())) {
+            custom.setPassword(passwordEncoder.encode(customer.getNewPassword().trim()));
             return customerRepository.save(custom);
         }
         throw new ValidationException(Constant.API001, "password cu khong chinh xac");
 
+    }
+
+    @Transactional
+    public void updateOtherAddresses(Long id) {
+        customerRepository.updateOtherAddresses(id);
     }
 
 
