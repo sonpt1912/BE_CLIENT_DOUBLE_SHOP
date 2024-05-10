@@ -29,13 +29,13 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address add(Address ad, String username) {
-        Customer customer=customerRepository.findCustomerByUsername(username);
+        Customer customer = customerRepository.findCustomerByUsername(username);
+        List<Address> address = addressRepository.getAllByCustomerId(customer.getId());
         ad.setCreatedBy(customer.getName());
         ad.setCreatedTime(DateUtil.dateToString4(new Date()));
         ad.setCustomer(customer);
-        ad.setDefaul(1);
-
-       return addressRepository.save(ad);
+        ad.setDefaul(address.isEmpty() ? 0 : 1);
+        return addressRepository.save(ad);
     }
 
     @Override
@@ -48,7 +48,20 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public String deleteAddress(Address address) {
         Address add = this.getAddressById(address.getId());
-        addressRepository.delete(add);
+        Customer customer = add.getCustomer();
+        if (add.getDefaul() == 0) {
+            addressRepository.delete(add);
+            List<Address> list = addressRepository.getAllByCustomerId(customer.getId());
+            for (int i = 0; i < list.size(); i++) {
+                if (list.size() > 0) {
+                    list.get(0).setDefaul(0);
+                    addressRepository.save(list.get(0));
+                }
+            }
+        }
+        else {
+            addressRepository.delete(add);
+        }
         return Constant.SUCCESS;
     }
 
@@ -59,7 +72,6 @@ public class AddressServiceImpl implements AddressService {
         add.setProvince(address.getProvince());
         add.setDistrict(address.getDistrict());
         add.setDescription(address.getDescription());
-//        add.setDefaul(address.getDefaul());
         return addressRepository.save(add);
     }
 
