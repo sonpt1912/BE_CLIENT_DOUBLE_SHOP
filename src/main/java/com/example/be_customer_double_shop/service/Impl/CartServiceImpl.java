@@ -87,7 +87,7 @@ public class CartServiceImpl implements CartService {
                 map.put("quantity", dt.getQuantity());
                 map.put("price", dt.getPrice());
                 map.put("discountAmount", dt.getDiscountAmount());
-//                map.put("listImages", cloudinary.search().expression("folder:double_shop/product/" + dt.getProduct().getCode() + "/*").maxResults(500).execute());
+                map.put("listImages", cloudinary.search().expression("folder:double_shop/product/" + dt.getProduct().getCode() + "/*").maxResults(500).execute());
                 return map;
             };
             callableList.add(callable);
