@@ -14,8 +14,12 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -29,14 +33,26 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private DetailProductService detailProductService;
 
+    @Autowired
+    private ExecutorService executorService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     public Object getAllByCondition(ProductRequest request) throws Exception {
         ListResponse<Product> listResponse = (ListResponse<Product>) getByCondition(request);
+
+        List<Callable<String>> listCallables = new ArrayList<>();
         for (int i = 0; i < listResponse.getListData().size(); i++) {
-            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(i).getCode() + "/*").maxResults(500).execute());
+            int finalI = i;
+            Callable callable = () -> {
+                listResponse.getListData().get(finalI).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(finalI).getCode() + "/*").maxResults(500).execute());
+                return null;
+            };
+            listCallables.add(callable);
         }
+        executorService.invokeAll(listCallables);
+
         return listResponse;
     }
 
@@ -84,6 +100,8 @@ public class ProductServiceImpl implements ProductService {
             str.append(" AND m.id = :idMaterial ");
             params.put("idMaterial", request.getIdMaterial());
         }
+
+        str.append(" GROUP BY p.id ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             str.append(" LIMIT :page, :pageSize");
