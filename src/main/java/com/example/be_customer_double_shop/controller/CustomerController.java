@@ -107,5 +107,11 @@ public class CustomerController {
         }
     }
 
+    @PostMapping("/check-address-defaul")
+    public ResponseEntity check(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        String username = jwtProvider.getUsernameFromToken(token);
+        Customer customer=customerRepository.findCustomerByUsername(username);
+       return new ResponseEntity(addressService.checkAddressDefaul(customer.getId()),HttpStatus.OK);
+    }
 
 }

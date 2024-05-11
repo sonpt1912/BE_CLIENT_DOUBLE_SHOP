@@ -18,4 +18,6 @@ public interface AddressService {
 
     List<Address> getAllByIdCustomer(long id);
 
+    String checkAddressDefaul(long id);
+
 }

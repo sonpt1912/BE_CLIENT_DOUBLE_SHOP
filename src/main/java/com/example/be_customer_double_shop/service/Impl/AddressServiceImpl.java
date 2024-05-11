@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -85,5 +86,39 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.getAllByCustomerId(id);
     }
 
+    @Override
+    public String checkAddressDefaul(long id) {
+        Address a = null;
+        List<Address> list = addressRepository.getAllByCustomerId(id);
+        if (list.size() == 1) {
+            if (list.get(0).getDefaul() == 1) {
+                list.get(0).setDefaul(0);
+            }
+        } else if (list.size() > 1) {
+            boolean foundDefault = false;
+            for (int i=0;i<list.size();i++) {
+                if (list.get(i).getDefaul() == 1) {
+                    foundDefault = true;
+                    a= list.get(i);
+                    a.setDefaul(0);
+                    break;
+                }
+            }
+            if (foundDefault) {
+                for (Address address : list) {
+                    if (address.getId()!=a.getId()) {
+                        address.setDefaul(1);
+                    }
+                }
+            }
+            else {
+                for (int i = 1; i < list.size(); i++) {
+                    list.get(i).setDefaul(1);
+                }
+            }
+        }
+        addressRepository.saveAll(list);
+        return Constant.SUCCESS;
+    }
 
 }
