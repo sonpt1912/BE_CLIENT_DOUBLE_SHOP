@@ -17,7 +17,7 @@ public interface SizeRepository extends JpaRepository<Size, Long> {
     @Query(value = "SELECT * FROM size WHERE code = :code", nativeQuery = true)
     Size getSizeByCode(@Param("code") String code);
 
-    @Query(value = "SELECT s FROM Size s WHERE s.status = :status")
+    @Query(value = "SELECT s FROM Size s WHERE s.status = :status ORDER BY s.name DESC ")
     List<Size> getAllSizes(@Param("status") long status);
 
 }
