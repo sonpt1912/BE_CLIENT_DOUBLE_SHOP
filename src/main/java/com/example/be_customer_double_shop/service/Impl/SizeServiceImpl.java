@@ -40,6 +40,8 @@ public class SizeServiceImpl implements SizeService {
         sql.append("AND dp.id_product = :idProduct ");
         params.put("idProduct", sizeRequest.getIdProduct());
 
+        sql.append(" ORDER BY s.name DESC ");
+
         Query query = entityManager.createNativeQuery(sql.toString(), Size.class);
         params.forEach(query::setParameter);
 

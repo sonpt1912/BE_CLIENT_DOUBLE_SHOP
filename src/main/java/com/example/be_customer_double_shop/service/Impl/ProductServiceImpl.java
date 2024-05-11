@@ -85,6 +85,8 @@ public class ProductServiceImpl implements ProductService {
             params.put("idMaterial", request.getIdMaterial());
         }
 
+        str.append(" GROUP BY p.id ");
+
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             str.append(" LIMIT :page, :pageSize");
             if (request.getPage() == 0) {
