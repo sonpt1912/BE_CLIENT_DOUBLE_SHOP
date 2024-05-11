@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -62,12 +64,20 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
     @Override
     public List<Product> getByCustomerId(String username) throws Exception {
-        Customer customer=customerRepository.findCustomerByUsername(username);
+        Customer customer = customerRepository.findCustomerByUsername(username);
+        List<Product> productList = productRepository.findByCustomerId(customer.getId());
 
-        List<Product> list= productRepository.findByCustomerId(customer.getId());
-                for (int i = 0; i < list.size(); i++) {
-            list.get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + list.get(i).getCode() + "/*").maxResults(500).execute());
-       }
-                return list;
+        for (Product product : productList) {
+            Map<String, Object> searchResult = cloudinary.search()
+                    .expression("folder:double_shop/product/" + product.getCode() + "/*")
+                    .maxResults(500)
+                    .execute();
+
+            product.setListImages(searchResult); // Gán giá trị map vào thuộc tính listImages
+        }
+
+        return productList;
     }
+
+
 }
