@@ -1,6 +1,5 @@
 package com.example.be_customer_double_shop.service.Impl;
 
-import com.example.be_customer_double_shop.dto.response.AddressResponse;
 import com.example.be_customer_double_shop.entity.Address;
 import com.example.be_customer_double_shop.entity.Customer;
 import com.example.be_customer_double_shop.repository.AddressRepository;
@@ -11,7 +10,6 @@ import com.example.be_customer_double_shop.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,8 +56,7 @@ public class AddressServiceImpl implements AddressService {
                     addressRepository.save(list.get(0));
                 }
             }
-        }
-        else {
+        } else {
             addressRepository.delete(add);
         }
         return Constant.SUCCESS;
@@ -83,6 +80,11 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public List<Address> getAllByIdCustomer(long id) {
         return addressRepository.getAllByCustomerId(id);
+    }
+
+    @Override
+    public void updateOtherAddress(long id) {
+        addressRepository.updateOtherAddresses(id);
     }
 
 
