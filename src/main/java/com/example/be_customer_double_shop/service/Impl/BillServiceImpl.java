@@ -5,7 +5,6 @@ import com.example.be_customer_double_shop.dto.request.BillRequest;
 import com.example.be_customer_double_shop.dto.response.ListResponse;
 import com.example.be_customer_double_shop.entity.*;
 import com.example.be_customer_double_shop.repository.BillRepository;
-import com.example.be_customer_double_shop.repository.CustomerVoucherRepository;
 import com.example.be_customer_double_shop.service.*;
 import com.example.be_customer_double_shop.util.Constant;
 import com.example.be_customer_double_shop.util.DateUtil;
@@ -69,10 +68,11 @@ public class BillServiceImpl implements BillService {
                 .phone(billRequest.getPhone())
                 .address(billRequest.getAddress())
                 .note(billRequest.getNote())
-                .status(billRequest.getStatus())
+                .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                 .payment(billRequest.getPayment())
-                .discountAmount(billRequest.getDiscoutAmout())
-                .type(billRequest.getType()).build());
+                .createdTime(DateUtil.dateToString4(new Date()))
+                .receiver(billRequest.getReceiver())
+                .type(Constant.BILL.TYPE.DEVERILY).build());
 
         if (bill != null) {
             // create bill_history

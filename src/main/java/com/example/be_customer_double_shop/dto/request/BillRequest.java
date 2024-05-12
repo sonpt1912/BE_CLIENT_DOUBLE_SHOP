@@ -50,6 +50,8 @@ public class BillRequest {
 
     private List<Cart> listCart;
 
+    private String receiver;
+
     private int page;
 
     private int pageSize;

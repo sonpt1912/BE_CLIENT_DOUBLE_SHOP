@@ -46,12 +46,18 @@ public class CartServiceImpl implements CartService {
     public Object createCart(CartRequest request, String username) {
         DetailProduct detailProduct = detailProductService.getOneById(request.getIdDetailProduct());
         Customer customer = customerService.findUserbyUsername(username);
-        Cart cart = Cart.builder()
-                .quantity(request.getQuantity())
-                .detailProduct(detailProduct)
-                .customer(customer)
-                .build();
-        return cartRepository.save(cart);
+        Cart cartedExist = cartRepository.cartExistByCustomerAndProduct(customer.getId(), detailProduct.getId());
+        if (cartedExist == null) {
+            Cart cart = Cart.builder()
+                    .quantity(request.getQuantity())
+                    .detailProduct(detailProduct)
+                    .customer(customer)
+                    .build();
+            return cartRepository.save(cart);
+        } else {
+            cartedExist.setQuantity(cartedExist.getQuantity() + request.getQuantity());
+            return cartRepository.save(cartedExist);
+        }
     }
 
     @Override

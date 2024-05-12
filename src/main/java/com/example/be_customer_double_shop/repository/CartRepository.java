@@ -40,4 +40,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "GROUP BY c.id,p2.code, p2.name, dp.size, dp.color, dp.price")
     List<DetailProductDao> getAllDetailProductFromCart(@Param("username") String username);
 
+
+    @Query(value = "SELECT c FROM Cart c WHERE c.customer.id = :customer AND c.detailProduct.id = :product")
+    Cart cartExistByCustomerAndProduct(@Param("customer") long customer, @Param("product") long product);
 }
