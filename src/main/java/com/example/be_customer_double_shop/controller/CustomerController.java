@@ -2,12 +2,9 @@ package com.example.be_customer_double_shop.controller;
 
 import com.example.be_customer_double_shop.entity.Address;
 import com.example.be_customer_double_shop.entity.Customer;
-import com.example.be_customer_double_shop.repository.CustomerRepository;
 import com.example.be_customer_double_shop.security.JwtProvider;
 import com.example.be_customer_double_shop.service.AddressService;
 import com.example.be_customer_double_shop.service.CustomerService;
-import com.example.be_customer_double_shop.service.Impl.AddressServiceImpl;
-import com.example.be_customer_double_shop.service.Impl.CusmerServiceImpl;
 import com.example.be_customer_double_shop.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,12 +28,6 @@ public class CustomerController {
     @Autowired
     private VoucherService voucherService;
 
-    @Autowired
-    private CusmerServiceImpl cusmerServiceImpl;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
 
     @PostMapping("/user-info")
     public ResponseEntity getUserinfo(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
@@ -57,9 +48,9 @@ public class CustomerController {
     }
 
     @PostMapping("/create-address")
-    public ResponseEntity createAddress(@RequestBody Address address,@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity createAddress(@RequestBody Address address, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(addressService.add(address,username), HttpStatus.OK);
+        return new ResponseEntity(addressService.add(address, username), HttpStatus.OK);
     }
 
     @PostMapping("/update-address")
@@ -71,7 +62,7 @@ public class CustomerController {
     @GetMapping("/get-all-address")
     public ResponseEntity getAll(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
-        Customer customer=customerRepository.findCustomerByUsername(username);
+        Customer customer = customerService.findUserbyUsername(username);
         return new ResponseEntity(addressService.getAllByIdCustomer(customer.getId()), HttpStatus.OK);
     }
 
