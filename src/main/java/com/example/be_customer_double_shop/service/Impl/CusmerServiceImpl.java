@@ -65,10 +65,4 @@ public class CusmerServiceImpl implements CustomerService {
 
     }
 
-    @Transactional
-    public void updateOtherAddresses(Long id) {
-        customerRepository.updateOtherAddresses(id);
-    }
-
-
 }

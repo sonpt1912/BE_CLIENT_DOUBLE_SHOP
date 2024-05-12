@@ -1,6 +1,7 @@
 package com.example.be_customer_double_shop.service.Impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.api.exceptions.RateLimited;
 import com.example.be_customer_double_shop.dto.ValidationException;
 import com.example.be_customer_double_shop.dto.request.FavoriteRequest;
 import com.example.be_customer_double_shop.entity.Customer;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,22 +65,29 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
         return Constant.SUCCESS;
     }
+
     @Override
     public List<Product> getByCustomerId(String username) throws Exception {
-        Customer customer = customerRepository.findCustomerByUsername(username);
-        List<Product> productList = productRepository.findByCustomerId(customer.getId());
-
-        for (Product product : productList) {
-            Map<String, Object> searchResult = cloudinary.search()
-                    .expression("folder:double_shop/product/" + product.getCode() + "/*")
-                    .maxResults(500)
-                    .execute();
-
-            product.setListImages(searchResult); // Gán giá trị map vào thuộc tính listImages
+        try {
+            Customer customer = customerRepository.findCustomerByUsername(username);
+            List<Product> productList = productRepository.findByCustomerId(customer.getId());
+            for (Product product : productList) {
+                try {
+                    Map<String, Object> searchResult = cloudinary.search()
+                            .expression("folder:double_shop/product/" + product.getCode() + "/*")
+                            .maxResults(500)
+                            .execute();
+                    product.setListImages(searchResult);
+                } catch (RateLimited e) {
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Rate Limit Exceeded", e);
+                    continue;
+                }
+            }
+            return productList;
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Error occurred", e);
+            throw e;
         }
-
-        return productList;
     }
-
 
 }

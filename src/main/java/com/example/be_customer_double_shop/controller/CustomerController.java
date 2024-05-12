@@ -31,6 +31,11 @@ public class CustomerController {
     @Autowired
     private VoucherService voucherService;
 
+    @Autowired
+    private CusmerServiceImpl cusmerServiceImpl;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
 
     @PostMapping("/user-info")
@@ -41,6 +46,7 @@ public class CustomerController {
 
     @PostMapping("/update-user-infor")
     public ResponseEntity getUserinfo(@RequestBody Customer customer) {
+
         return new ResponseEntity(customerService.updateCustomer(customer), HttpStatus.OK);
     }
 
@@ -51,9 +57,9 @@ public class CustomerController {
     }
 
     @PostMapping("/create-address")
-    public ResponseEntity createAddress(@RequestBody Address address, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity createAddress(@RequestBody Address address,@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(addressService.add(address, username), HttpStatus.OK);
+        return new ResponseEntity(addressService.add(address,username), HttpStatus.OK);
     }
 
     @PostMapping("/update-address")
@@ -65,7 +71,7 @@ public class CustomerController {
     @GetMapping("/get-all-address")
     public ResponseEntity getAll(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
-        Customer customer = customerService.findUserbyUsername(username);
+        Customer customer=customerRepository.findCustomerByUsername(username);
         return new ResponseEntity(addressService.getAllByIdCustomer(customer.getId()), HttpStatus.OK);
     }
 
@@ -88,14 +94,14 @@ public class CustomerController {
         return new ResponseEntity(voucherService.getByCode(code), HttpStatus.OK);
     }
 
-    @PostMapping("/update-other-addresses")
-    public ResponseEntity<String> updateOtherAddresses(@RequestBody Address address) {
-        try {
-            addressService.updateOtherAddress(address.getId());
-            return ResponseEntity.ok("Cập nhật thành công!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật các bản ghi khác: " + e.getMessage());
-        }
-    }
+//    @PostMapping("/update-other-addresses")
+//    public ResponseEntity<String> updateOtherAddresses(@RequestBody Address address) {
+//        try {
+//            addressService.updateOtherAddresses(address.getId());
+//            return ResponseEntity.ok("Cập nhật thành công!");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật các bản ghi khác: " + e.getMessage());
+//        }
+//    }
 
 }
