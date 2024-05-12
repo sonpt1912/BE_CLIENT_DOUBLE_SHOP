@@ -1,5 +1,6 @@
 package com.example.be_customer_double_shop.dto.request;
 
+import com.example.be_customer_double_shop.entity.Cart;
 import com.example.be_customer_double_shop.entity.DetailProduct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,7 +48,7 @@ public class BillRequest {
 
     private Long payment;
 
-    private List<DetailProduct> listDetailProduct;
+    private List<Cart> listCart;
 
     private int page;
 

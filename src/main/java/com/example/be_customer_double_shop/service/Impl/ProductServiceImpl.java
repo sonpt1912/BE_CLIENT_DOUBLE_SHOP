@@ -120,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
         str.setLength(0);
         params.clear();
 
-        str.append(" SELECT COUNT(p.id) FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
+        str.append(" SELECT COUNT(distinct p.id) FROM product p INNER JOIN detail_product dp ON p.id = dp.id_product ");
         str.append(" INNER JOIN size s ON dp.id_size = s.id ");
         str.append(" INNER JOIN color c ON dp.id_color = c.id ");
         str.append(" INNER JOIN material m ON p.id_material = m.id ");

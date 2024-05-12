@@ -18,11 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -42,11 +40,6 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private BillHistoryService billHistoryService;
 
-
-    @Autowired
-    private CustomerVoucherRepository customerVoucherRepository;
-
-
     @Autowired
     private CustomerService customerService;
 
@@ -55,23 +48,22 @@ public class BillServiceImpl implements BillService {
 
     @Override
     @Transactional
-    public Object createBill(BillRequest billRequest, String username) throws ParseException {
-        String code = UUID.randomUUID().toString();
+    public Object createBill(BillRequest billRequest, String username) {
+        Customer customer = customerService.findUserbyUsername(username);
+        String code = StringUtil.generateString(8);
         Boolean check = true;
         while (check) {
-            code = UUID.randomUUID().toString();
+            code = StringUtil.generateString(8);
             check = billRepository.existsByCode(code);
         }
-
         Voucher voucher = null;
         if (!StringUtil.stringIsNullOrEmty(billRequest.getIdVoucher())) {
             voucher = Voucher.builder().id(billRequest.getIdVoucher()).build();
         }
-
         // create bill
         Bill bill = billRepository.save(Bill.builder().code(code)
+                .customer(customer)
                 .totalAmount(billRequest.getTotalAmout())
-                .customer(customerService.findUserbyUsername(username))
                 .voucher(voucher)
                 .discountAmount(billRequest.getDiscoutAmout())
                 .phone(billRequest.getPhone())
@@ -84,8 +76,7 @@ public class BillServiceImpl implements BillService {
 
         if (bill != null) {
             // create bill_history
-            String description = "Tạo hóa đơn, cho đơn ship";
-
+            String description = "Đặt hàng";
             BillHistory billHistory = BillHistory.builder().bill(bill)
                     .status(billRequest.getStatus())
                     .createdBy(username)
@@ -102,14 +93,14 @@ public class BillServiceImpl implements BillService {
                 vou.setQuantity(voucherQuantity);
                 voucherService.updateVoucher(vou, username);
             }
-
+            List<DetailProduct> detailProductList = detailProductService.getAllDetailProductById(billRequest.getListCart());
             // add cac san pham vao bill
-            List<DetailBill> dbl = detailBillService.createDetailBill(bill, billRequest.getListDetailProduct());
+            List<DetailBill> dbl = detailBillService.createDetailBill(bill, detailProductList);
             if (dbl != null) {
                 // update cac gia tri cua detial product
-                for (DetailProduct dt : billRequest.getListDetailProduct()) {
-                    DetailProduct currentProduct = detailProductService.getOneById(dt.getId());
-                    long quantity = currentProduct.getQuantity() - dt.getQuantity();
+                for (int i = 0; i < detailProductList.size(); i++) {
+                    DetailProduct currentProduct = detailProductService.getOneById(detailProductList.get(i).getId());
+                    long quantity = currentProduct.getQuantity() - billRequest.getListCart().get(i).getQuantity();
                     currentProduct.setQuantity(quantity);
                     if (quantity == 0 || quantity < 0) {
                         currentProduct.setStatus(Constant.IN_ACTIVE);
