@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface DetailBillService {
 
-    // create detail bill( bill, detail_product )
     List<DetailBill> createDetailBill(Bill bill, List<DetailProduct> listProduct);
 
     Object getDetailBill(BillRequest billRequest);

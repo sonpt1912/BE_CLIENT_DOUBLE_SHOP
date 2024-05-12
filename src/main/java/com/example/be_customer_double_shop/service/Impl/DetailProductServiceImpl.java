@@ -1,6 +1,7 @@
 package com.example.be_customer_double_shop.service.Impl;
 
 import com.example.be_customer_double_shop.dto.request.ProductRequest;
+import com.example.be_customer_double_shop.entity.Cart;
 import com.example.be_customer_double_shop.entity.DetailProduct;
 import com.example.be_customer_double_shop.repository.DetailProductRepository;
 import com.example.be_customer_double_shop.service.DetailProductService;
@@ -10,6 +11,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +24,6 @@ public class DetailProductServiceImpl implements DetailProductService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
-    public Object getListDetailProductByProductId(Long id) {
-        return detailProductRepository.getAllDetailProduct(id);
-    }
 
     @Override
     public Object updateDetailProduct(DetailProduct detailProduct, String username) {
@@ -40,13 +38,17 @@ public class DetailProductServiceImpl implements DetailProductService {
     }
 
     @Override
-    public Object updateAllDetailPro(List<DetailProduct> list) {
-        return detailProductRepository.saveAll(list);
+    public DetailProduct getDetailProductByColorSizeAndProduct(ProductRequest productRequest) {
+        return detailProductRepository.getDetailProductByColorAndSizeAndProduct(productRequest.getIdColor(), productRequest.getIdSize(), productRequest.getIdProduct());
     }
 
     @Override
-    public DetailProduct getDetailProductByColorSizeAndProduct(ProductRequest productRequest) {
-        return detailProductRepository.getDetailProductByColorAndSizeAndProduct(productRequest.getIdColor(), productRequest.getIdSize(), productRequest.getIdProduct());
+    public List<DetailProduct> getAllDetailProductById(List<Cart> cartList) {
+        List<Long> idDetailProduct = new ArrayList<>();
+        for (Cart cart : cartList) {
+            idDetailProduct.add(cart.getDetailProduct().getId());
+        }
+        return detailProductRepository.getAllDetailProductByListId(idDetailProduct);
     }
 
 
