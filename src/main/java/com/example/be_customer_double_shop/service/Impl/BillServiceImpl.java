@@ -78,7 +78,7 @@ public class BillServiceImpl implements BillService {
             // create bill_history
             String description = "Đặt hàng";
             BillHistory billHistory = BillHistory.builder().bill(bill)
-                    .status(billRequest.getStatus())
+                    .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                     .createdBy(username)
                     .createdTime(DateUtil.dateToString4(new Date()))
                     .description(description).build();

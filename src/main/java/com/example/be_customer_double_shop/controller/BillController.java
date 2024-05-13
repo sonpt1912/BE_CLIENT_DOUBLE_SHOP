@@ -30,7 +30,6 @@ public class BillController {
     @Autowired
     private DetailBillService detailBillService;
 
-    // add new bill
     @PostMapping("/create-bill")
     public ResponseEntity createBill(@RequestBody BillRequest billRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws ParseException {
         String username = jwtProvider.getUsernameFromToken(token);
@@ -64,7 +63,6 @@ public class BillController {
         return new ResponseEntity(detailBillService.getDetailBill(billRequest), HttpStatus.OK);
     }
 
-    // xóa ctbill khỏi bill
     @PostMapping("/delete-detail-bill")
     public ResponseEntity deleteDetailBill(@RequestBody BillRequest billRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
