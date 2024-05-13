@@ -14,6 +14,6 @@ public interface DetailProductService {
 
     DetailProduct getDetailProductByColorSizeAndProduct(ProductRequest productRequest);
 
-    List<DetailProduct> getAllDetailProductById(List<Cart> cartList);
+    List<DetailProduct> getAllDetailProductByIdCart(List<Cart> cartList);
 
 }

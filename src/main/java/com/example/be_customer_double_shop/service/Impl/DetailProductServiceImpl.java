@@ -43,12 +43,12 @@ public class DetailProductServiceImpl implements DetailProductService {
     }
 
     @Override
-    public List<DetailProduct> getAllDetailProductById(List<Cart> cartList) {
-        List<Long> idDetailProduct = new ArrayList<>();
+    public List<DetailProduct> getAllDetailProductByIdCart(List<Cart> cartList) {
+        List<Long> idCart = new ArrayList<>();
         for (Cart cart : cartList) {
-            idDetailProduct.add(cart.getDetailProduct().getId());
+            idCart.add(cart.getId());
         }
-        return detailProductRepository.getAllDetailProductByListId(idDetailProduct);
+        return detailProductRepository.getAllDetailProductByListId(idCart);
     }
 
 

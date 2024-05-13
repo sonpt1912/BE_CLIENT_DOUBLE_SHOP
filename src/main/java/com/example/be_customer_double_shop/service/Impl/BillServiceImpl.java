@@ -78,7 +78,7 @@ public class BillServiceImpl implements BillService {
             // create bill_history
             String description = "Đặt hàng";
             BillHistory billHistory = BillHistory.builder().bill(bill)
-                    .status(billRequest.getStatus())
+                    .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                     .createdBy(username)
                     .createdTime(DateUtil.dateToString4(new Date()))
                     .description(description).build();
@@ -93,7 +93,7 @@ public class BillServiceImpl implements BillService {
                 vou.setQuantity(voucherQuantity);
                 voucherService.updateVoucher(vou, username);
             }
-            List<DetailProduct> detailProductList = detailProductService.getAllDetailProductById(billRequest.getListCart());
+            List<DetailProduct> detailProductList = detailProductService.getAllDetailProductByIdCart(billRequest.getListCart());
             // add cac san pham vao bill
             List<DetailBill> dbl = detailBillService.createDetailBill(bill, detailProductList);
             if (dbl != null) {
