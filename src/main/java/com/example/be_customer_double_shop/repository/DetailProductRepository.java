@@ -43,7 +43,7 @@ public interface DetailProductRepository extends JpaRepository<DetailProduct, Lo
     @Query(value = "SELECT dt FROM DetailProduct dt WHERE dt.color.id = :idColor AND dt.size.id = :idSize AND dt.product.id = :idProduct ")
     DetailProduct getDetailProductByColorAndSizeAndProduct(@Param("idColor") long idColor, @Param("idSize") long idSize, @Param("idProduct") long idProduct);
 
-    @Query(value = "SELECT dt FROM DetailProduct dt WHERE dt.id IN ( :listCart )")
+    @Query(value = "SELECT dt FROM DetailProduct dt INNER JOIN Cart c ON c.detailProduct.id = dt.id WHERE c.id IN ( :listCart )")
     List<DetailProduct> getAllDetailProductByListId(@Param("listCart") List<Long> listCart);
 
 }

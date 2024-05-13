@@ -93,7 +93,7 @@ public class BillServiceImpl implements BillService {
                 vou.setQuantity(voucherQuantity);
                 voucherService.updateVoucher(vou, username);
             }
-            List<DetailProduct> detailProductList = detailProductService.getAllDetailProductById(billRequest.getListCart());
+            List<DetailProduct> detailProductList = detailProductService.getAllDetailProductByIdCart(billRequest.getListCart());
             // add cac san pham vao bill
             List<DetailBill> dbl = detailBillService.createDetailBill(bill, detailProductList);
             if (dbl != null) {
