@@ -17,8 +17,6 @@ public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
 
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Autowired
     private JwtProvider jwtProvider;
@@ -33,7 +31,7 @@ public class FavoriteController {
     public ResponseEntity deleteFavorite(@RequestBody Favorite favorite) {
         return ResponseEntity.ok(favoriteService.deleteFavortite(favorite));
     }
-    @PostMapping("/get-all-by-id-customer")
+    @PostMapping("/get-all-by-user-login")
     public ResponseEntity getAllByIdCustomer(@RequestHeader("Authorization") String token) throws Exception {
         String username = jwtProvider.getUsernameFromToken(token);
         return ResponseEntity.ok(favoriteService.getByCustomerId(username));

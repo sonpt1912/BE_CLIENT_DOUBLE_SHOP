@@ -37,7 +37,6 @@ public class CustomerController {
 
     @PostMapping("/update-user-infor")
     public ResponseEntity getUserinfo(@RequestBody Customer customer) {
-
         return new ResponseEntity(customerService.updateCustomer(customer), HttpStatus.OK);
     }
 
@@ -65,7 +64,6 @@ public class CustomerController {
         Customer customer = customerService.findUserbyUsername(username);
         return new ResponseEntity(addressService.getAllByIdCustomer(customer.getId()), HttpStatus.OK);
     }
-
 
     @PostMapping("/update-password")
     public ResponseEntity updatePassword(@RequestBody Customer customer, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
