@@ -70,6 +70,7 @@ public class BillServiceImpl implements BillService {
                 .note(billRequest.getNote())
                 .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                 .payment(billRequest.getPayment())
+                .moneyShip(billRequest.getMoneyShip())
                 .createdTime(DateUtil.dateToString4(new Date()))
                 .receiver(billRequest.getReceiver())
                 .type(Constant.BILL.TYPE.DEVERILY).build());
