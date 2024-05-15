@@ -38,6 +38,7 @@ public class GHNServiceImpl implements GHNService {
         header.add("ShopId", shopId);
 
         Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("service_id", 53320);
         requestBody.put("service_type_id", 5);
         requestBody.put("to_district_id", ghnRequest.getToDistrictId());
         requestBody.put("to_ward_code", ghnRequest.getToWardCode());

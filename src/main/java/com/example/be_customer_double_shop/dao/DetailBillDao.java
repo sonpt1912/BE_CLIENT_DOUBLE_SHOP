@@ -9,6 +9,8 @@ public interface DetailBillDao {
 
     Long getId();
 
+    String getCode();
+
     String getName();
 
     Color getColor();

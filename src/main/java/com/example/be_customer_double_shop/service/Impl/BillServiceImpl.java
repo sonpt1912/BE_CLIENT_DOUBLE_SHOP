@@ -40,6 +40,9 @@ public class BillServiceImpl implements BillService {
     private BillHistoryService billHistoryService;
 
     @Autowired
+    private CustomerVoucherService customerVoucherService;
+
+    @Autowired
     private CustomerService customerService;
 
     @PersistenceContext
@@ -70,6 +73,7 @@ public class BillServiceImpl implements BillService {
                 .note(billRequest.getNote())
                 .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                 .payment(billRequest.getPayment())
+                .moneyShip(billRequest.getMoneyShip())
                 .createdTime(DateUtil.dateToString4(new Date()))
                 .receiver(billRequest.getReceiver())
                 .type(Constant.BILL.TYPE.DEVERILY).build());
@@ -92,6 +96,12 @@ public class BillServiceImpl implements BillService {
                 }
                 vou.setQuantity(voucherQuantity);
                 voucherService.updateVoucher(vou, username);
+
+                if (customer != null) {
+                    CustomerVoucher customerVoucher = customerVoucherService.getByCustomerAndVoucher(customer.getId(), billRequest.getIdVoucher());
+                    customerVoucher.setUsageDate(DateUtil.dateToString4(new Date()));
+                    customerVoucherService.updateCustomerVoucher(customerVoucher);
+                }
             }
             List<DetailProduct> detailProductList = detailProductService.getAllDetailProductByIdCart(billRequest.getListCart());
             // add cac san pham vao bill
@@ -141,6 +151,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Object getAllByCondition(BillRequest billRequest, String username) {
+        Customer customer = customerService.findUserbyUsername(username);
         ListResponse<Bill> listResponse = new ListResponse<>();
 
         StringBuilder str = new StringBuilder();
@@ -167,7 +178,7 @@ public class BillServiceImpl implements BillService {
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getIdCustomer())) {
             str.append(" AND b.id_customer = :idCus ");
-            params.put("idCus", billRequest.getIdCustomer());
+            params.put("idCus", customer.getId());
         }
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getPayment())) {
@@ -214,7 +225,7 @@ public class BillServiceImpl implements BillService {
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getIdCustomer())) {
             str.append(" AND b.id_customer = :idCus ");
-            params.put("idCus", billRequest.getIdCustomer());
+            params.put("idCus", customer.getId());
         }
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getPayment())) {
@@ -259,6 +270,79 @@ public class BillServiceImpl implements BillService {
         billRepository.save(bill);
         // xoa detail bill
         return detailBillService.deleteDetailBill(billRequest.getIdDetailBill());
+    }
+
+    @Override
+    public Object createBill(BillRequest billRequest) {
+        String code = StringUtil.generateString(8);
+        Boolean check = true;
+        while (check) {
+            code = StringUtil.generateString(8);
+            check = billRepository.existsByCode(code);
+        }
+        Voucher voucher = null;
+        if (!StringUtil.stringIsNullOrEmty(billRequest.getIdVoucher())) {
+            voucher = Voucher.builder().id(billRequest.getIdVoucher()).build();
+        }
+        // create bill
+        Bill bill = billRepository.save(Bill.builder().code(code)
+                .totalAmount(billRequest.getTotalAmout())
+                .voucher(voucher)
+                .receiver(billRequest.getReceiver())
+                .discountAmount(billRequest.getDiscoutAmout())
+                .phone(billRequest.getPhone())
+                .address(billRequest.getAddress())
+                .moneyShip(billRequest.getMoneyShip())
+                .note(billRequest.getNote())
+                .status(billRequest.getStatus())
+                .payment(billRequest.getPayment())
+                .discountAmount(billRequest.getDiscoutAmout())
+                .createdTime(DateUtil.dateToString4(new Date()))
+                .type(billRequest.getType()).build());
+        if (bill != null) {
+            // create bill_history
+            String description = "";
+            description = "Tạo hóa đơn, cho đơn ship";
+            BillHistory billHistory = BillHistory.
+                    builder().
+                    bill(bill)
+                    .status(billRequest.getStatus())
+                    .createdBy("Khach Le")
+                    .createdTime(DateUtil.dateToString4(new Date()))
+                    .description(description).build();
+            billHistoryService.createBillHistory(billHistory);
+
+            if (!StringUtil.stringIsNullOrEmty(billRequest.getIdVoucher())) {
+                Voucher vou = voucherService.getOneById(billRequest.getIdVoucher());
+                int voucherQuantity = vou.getQuantity() - 1;
+                if (voucherQuantity == 0) {
+                    vou.setStatus(Constant.IN_ACTIVE);
+                }
+                vou.setQuantity(voucherQuantity);
+            }
+
+            // add cac san pham vao bill
+            List<DetailBill> dbl = detailBillService.createDetailBill(bill, billRequest.getListDetailProduct());
+            if (dbl != null) {
+                // update cac gia tri cua detial product
+                for (DetailProduct dt : billRequest.getListDetailProduct()) {
+                    DetailProduct currentProduct = detailProductService.getOneById(dt.getId());
+                    long quantity = currentProduct.getQuantity() - dt.getQuantity();
+                    currentProduct.setQuantity(quantity);
+                    if (quantity == 0 || quantity < 0) {
+                        currentProduct.setStatus(Constant.IN_ACTIVE);
+                    }
+
+                    if (dt.getQuantity() > currentProduct.getQuantity()) {
+                        return new ValidationException(Constant.API001, "vuot qua so luong hang hoa co");
+                    }
+
+                    detailProductService.updateDetailProduct(currentProduct, "Khach Le");
+                }
+            }
+            return Constant.SUCCESS;
+        }
+        throw new ValidationException(Constant.API001, "");
     }
 
 }
