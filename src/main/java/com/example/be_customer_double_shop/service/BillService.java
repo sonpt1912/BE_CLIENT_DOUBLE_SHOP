@@ -16,4 +16,7 @@ public interface BillService {
 
     Object deleteDetailBill(BillRequest billRequest, String username);
 
+    // public
+    Object createBill(BillRequest billRequest);
+
 }
