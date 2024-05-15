@@ -104,6 +104,13 @@ public class BillServiceImpl implements BillService {
                 }
             }
             List<DetailProduct> detailProductList = detailProductService.getAllDetailProductByIdCart(billRequest.getListCart());
+
+            for (int i = 0; i < detailProductList.size(); i++) {
+                DetailProduct detailProduct = detailProductList.get(i);
+                detailProduct.setDiscountAmout(billRequest.getListCart().get(i).getDiscountAmout());
+                detailProductList.set(i, detailProduct);
+            }
+
             // add cac san pham vao bill
             List<DetailBill> dbl = detailBillService.createDetailBill(bill, detailProductList);
             if (dbl != null) {
@@ -186,6 +193,7 @@ public class BillServiceImpl implements BillService {
             params.put("payment", billRequest.getPayment());
         }
 
+        str.append(" ORDER BY b.created_time ");
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getPage())) {
             str.append(" LIMIT :page, :pageSize");

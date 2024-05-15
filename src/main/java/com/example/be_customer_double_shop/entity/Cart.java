@@ -3,6 +3,8 @@ package com.example.be_customer_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "cart")
 @AllArgsConstructor
@@ -27,6 +29,9 @@ public class Cart {
 
     @Column(name = "quantity", nullable = false)
     private Long quantity;
+
+    @Transient
+    private BigDecimal discountAmout;
 
 
 }
