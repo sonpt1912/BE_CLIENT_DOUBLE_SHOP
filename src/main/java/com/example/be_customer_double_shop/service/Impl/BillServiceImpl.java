@@ -191,7 +191,7 @@ public class BillServiceImpl implements BillService {
             params.put("payment", billRequest.getPayment());
         }
 
-        str.append(" ORDER BY b.created_time ");
+        str.append(" ORDER BY b.created_time DESC ");
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getPage())) {
             str.append(" LIMIT :page, :pageSize");
