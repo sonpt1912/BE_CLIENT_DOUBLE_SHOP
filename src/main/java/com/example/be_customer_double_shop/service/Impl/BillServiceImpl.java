@@ -183,10 +183,8 @@ public class BillServiceImpl implements BillService {
             params.put("idEm", billRequest.getIdEmployee());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(billRequest.getIdCustomer())) {
-            str.append(" AND b.id_customer = :idCus ");
-            params.put("idCus", customer.getId());
-        }
+        str.append(" AND b.id_customer = :idCus ");
+        params.put("idCus", customer.getId());
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getPayment())) {
             str.append(" AND b.payment = :payment ");
@@ -231,10 +229,8 @@ public class BillServiceImpl implements BillService {
             params.put("idEm", billRequest.getIdEmployee());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(billRequest.getIdCustomer())) {
-            str.append(" AND b.id_customer = :idCus ");
-            params.put("idCus", customer.getId());
-        }
+        str.append(" AND b.id_customer = :idCus ");
+        params.put("idCus", customer.getId());
 
         if (!StringUtil.stringIsNullOrEmty(billRequest.getPayment())) {
             str.append(" AND b.payment = :payment ");
