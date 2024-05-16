@@ -20,6 +20,6 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
     @Query(value = "SELECT v FROM Voucher v " +
             "         LEFT JOIN CustomerVoucher cv on v = cv.voucher " +
             "         INNER JOIN Customer c on cv.customer = c " +
-            "WHERE c.username = :username AND v.status = 0 AND v.quantity > 0")
+            "WHERE c.username = :username AND v.status = 0 AND v.quantity > 0 AND cv.usageDate IS NULL ")
     List<Voucher> findAllByUsernameLogin(@Param("username") String username);
 }
