@@ -82,5 +82,10 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.getAllByCustomerId(id);
     }
 
+    @Override
+    public void updateOtherAddress(long id) {
+        addressRepository.updateOtherAddresses(id);
+    }
+
 
 }
