@@ -83,14 +83,14 @@ public class CustomerController {
         return new ResponseEntity(voucherService.getByCode(code), HttpStatus.OK);
     }
 
-//    @PostMapping("/update-other-addresses")
-//    public ResponseEntity<String> updateOtherAddresses(@RequestBody Address address) {
-//        try {
-//            addressService.updateOtherAddresses(address.getId());
-//            return ResponseEntity.ok("Cập nhật thành công!");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật các bản ghi khác: " + e.getMessage());
-//        }
-//    }
+    @PostMapping("/update-other-addresses")
+    public ResponseEntity<String> updateOtherAddresses(@RequestBody Address address) {
+        try {
+            addressService.updateOtherAddress(address.getId());
+            return ResponseEntity.ok("Cập nhật thành công!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi cập nhật các bản ghi khác: " + e.getMessage());
+        }
+    }
 
 }

@@ -19,4 +19,6 @@ public interface AddressService {
 
     List<Address> getAllByIdCustomer(long id);
 
+    void updateOtherAddress(long id);
+
 }
