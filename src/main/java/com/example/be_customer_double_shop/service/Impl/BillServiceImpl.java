@@ -111,6 +111,7 @@ public class BillServiceImpl implements BillService {
             for (int i = 0; i < detailProductList.size(); i++) {
                 DetailProduct detailProduct = detailProductList.get(i);
                 detailProduct.setDiscountAmout(billRequest.getListCart().get(i).getDiscountAmout());
+                detailProduct.setQuantity(billRequest.getListCart().get(i).getQuantity());
                 detailProductList.set(i, detailProduct);
             }
 
@@ -149,10 +150,12 @@ public class BillServiceImpl implements BillService {
             billHistoryService.createBillHistory(billHistory);
             // update bill
             Bill bill = billRepository.findById(billRequest.getId()).get();
-            bill.setId(bill.getId());
-            bill.setAddress(billRequest.getAddress());
-            bill.setPhone(billRequest.getPhone());
-            bill.setMoneyShip(billRequest.getMoneyShip());
+            if (!StringUtil.stringIsNullOrEmty(billRequest.getAddress())) {
+                bill.setAddress(billRequest.getAddress());
+            }
+            if (!StringUtil.stringIsNullOrEmty(billRequest.getPhone())) {
+                bill.setPhone(billRequest.getPhone());
+            }
             bill.setStatus(billRequest.getStatus());
             billRepository.save(bill);
         } catch (Exception e) {
@@ -303,11 +306,11 @@ public class BillServiceImpl implements BillService {
                 .address(billRequest.getAddress())
                 .moneyShip(billRequest.getMoneyShip())
                 .note(billRequest.getNote())
-                .status(billRequest.getStatus())
+                .status(Constant.BILL.STATUS.WAIT_CONFIRM)
+                .type(Constant.TYPE.DEVERILY)
                 .payment(billRequest.getPayment())
                 .discountAmount(billRequest.getDiscoutAmout())
-                .createdTime(DateUtil.dateToString4(new Date()))
-                .type(billRequest.getType()).build());
+                .createdTime(DateUtil.dateToString4(new Date())).build());
         if (bill != null) {
             // create bill_history
             String description = "";
@@ -315,7 +318,7 @@ public class BillServiceImpl implements BillService {
             BillHistory billHistory = BillHistory.
                     builder().
                     bill(bill)
-                    .status(billRequest.getStatus())
+                    .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                     .createdBy("Khach Le")
                     .createdTime(DateUtil.dateToString4(new Date()))
                     .description(description).build();
