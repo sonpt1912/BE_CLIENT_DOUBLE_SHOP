@@ -303,7 +303,7 @@ public class BillServiceImpl implements BillService {
                 .address(billRequest.getAddress())
                 .moneyShip(billRequest.getMoneyShip())
                 .note(billRequest.getNote())
-                .status(billRequest.getStatus())
+                .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                 .payment(billRequest.getPayment())
                 .discountAmount(billRequest.getDiscoutAmout())
                 .createdTime(DateUtil.dateToString4(new Date()))
