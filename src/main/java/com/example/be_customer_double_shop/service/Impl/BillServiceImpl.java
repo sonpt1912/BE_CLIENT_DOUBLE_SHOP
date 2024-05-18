@@ -307,8 +307,7 @@ public class BillServiceImpl implements BillService {
                 .type(Constant.TYPE.DEVERILY)
                 .payment(billRequest.getPayment())
                 .discountAmount(billRequest.getDiscoutAmout())
-                .createdTime(DateUtil.dateToString4(new Date()))
-                .type(billRequest.getType()).build());
+                .createdTime(DateUtil.dateToString4(new Date())).build());
         if (bill != null) {
             // create bill_history
             String description = "";
