@@ -150,10 +150,12 @@ public class BillServiceImpl implements BillService {
             billHistoryService.createBillHistory(billHistory);
             // update bill
             Bill bill = billRepository.findById(billRequest.getId()).get();
-            bill.setId(bill.getId());
-            bill.setAddress(billRequest.getAddress());
-            bill.setPhone(billRequest.getPhone());
-            bill.setMoneyShip(billRequest.getMoneyShip());
+            if (!StringUtil.stringIsNullOrEmty(billRequest.getAddress())) {
+                bill.setAddress(billRequest.getAddress());
+            }
+            if (!StringUtil.stringIsNullOrEmty(billRequest.getPhone())) {
+                bill.setPhone(billRequest.getPhone());
+            }
             bill.setStatus(billRequest.getStatus());
             billRepository.save(bill);
         } catch (Exception e) {
