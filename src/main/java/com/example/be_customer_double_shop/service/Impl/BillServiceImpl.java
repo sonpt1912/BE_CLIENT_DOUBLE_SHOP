@@ -48,6 +48,9 @@ public class BillServiceImpl implements BillService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private CartService cartService;
+
     @Override
     @Transactional
     public Object createBill(BillRequest billRequest, String username) {
@@ -110,6 +113,8 @@ public class BillServiceImpl implements BillService {
                 detailProduct.setDiscountAmout(billRequest.getListCart().get(i).getDiscountAmout());
                 detailProductList.set(i, detailProduct);
             }
+
+            cartService.deleteByListId(billRequest.getListCart());
 
             // add cac san pham vao bill
             List<DetailBill> dbl = detailBillService.createDetailBill(bill, detailProductList);
