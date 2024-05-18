@@ -40,6 +40,13 @@ public class Constant {
 
     }
 
+    public interface TYPE {
+
+        Integer IN_STORE = 0;
+
+        Integer DEVERILY = 1;
+    }
+
     public interface PRODUCT {
 
         String PRODUCT = "PRODUCT";

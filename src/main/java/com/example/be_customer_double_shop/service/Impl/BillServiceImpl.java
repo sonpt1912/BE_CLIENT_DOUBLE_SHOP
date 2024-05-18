@@ -304,6 +304,7 @@ public class BillServiceImpl implements BillService {
                 .moneyShip(billRequest.getMoneyShip())
                 .note(billRequest.getNote())
                 .status(Constant.BILL.STATUS.WAIT_CONFIRM)
+                .type(Constant.TYPE.DEVERILY)
                 .payment(billRequest.getPayment())
                 .discountAmount(billRequest.getDiscoutAmout())
                 .createdTime(DateUtil.dateToString4(new Date()))
