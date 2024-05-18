@@ -111,6 +111,7 @@ public class BillServiceImpl implements BillService {
             for (int i = 0; i < detailProductList.size(); i++) {
                 DetailProduct detailProduct = detailProductList.get(i);
                 detailProduct.setDiscountAmout(billRequest.getListCart().get(i).getDiscountAmout());
+                detailProduct.setQuantity(billRequest.getListCart().get(i).getQuantity());
                 detailProductList.set(i, detailProduct);
             }
 
