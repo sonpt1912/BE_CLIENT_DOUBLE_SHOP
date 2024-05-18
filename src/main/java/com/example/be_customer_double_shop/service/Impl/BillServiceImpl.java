@@ -315,7 +315,7 @@ public class BillServiceImpl implements BillService {
             BillHistory billHistory = BillHistory.
                     builder().
                     bill(bill)
-                    .status(billRequest.getStatus())
+                    .status(Constant.BILL.STATUS.WAIT_CONFIRM)
                     .createdBy("Khach Le")
                     .createdTime(DateUtil.dateToString4(new Date()))
                     .description(description).build();
