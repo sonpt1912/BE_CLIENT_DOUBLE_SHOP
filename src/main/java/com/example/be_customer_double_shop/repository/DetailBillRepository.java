@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface DetailBillRepository extends JpaRepository<DetailBill, Long> {
 
-    @Query(value = " SELECT db.id AS id, p.name AS name, dp.color AS color, dp.size AS size, db.quantity AS quantity, db.price AS price, db.discountAmout AS discountAmout FROM Bill b " +
+    @Query(value = " SELECT db.id AS id, p.code AS code, p.name AS name, dp.color AS color, dp.size AS size, db.quantity AS quantity, db.price AS price, db.discountAmout AS discountAmout FROM Bill b " +
             "INNER JOIN DetailBill db ON db.bill = b " +
             "INNER JOIN DetailProduct  dp ON dp = db.detailProduct " +
             "INNER JOIN Product p ON p = dp.product " +

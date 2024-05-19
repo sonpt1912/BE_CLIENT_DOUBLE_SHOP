@@ -43,6 +43,17 @@ public class CartServiceImpl implements CartService {
     private ExecutorService executorService;
 
     @Override
+    public Object deleteByListId(List<Cart> idCart) {
+        try {
+            cartRepository.deleteAll(idCart);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
+        return Constant.SUCCESS;
+    }
+
+    @Override
     public Object createCart(CartRequest request, String username) {
         DetailProduct detailProduct = detailProductService.getOneById(request.getIdDetailProduct());
         Customer customer = customerService.findUserbyUsername(username);

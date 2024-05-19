@@ -1,7 +1,6 @@
 package com.example.be_customer_double_shop.service.Impl;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.api.exceptions.RateLimited;
 import com.example.be_customer_double_shop.dto.ValidationException;
 import com.example.be_customer_double_shop.dto.request.FavoriteRequest;
 import com.example.be_customer_double_shop.entity.Customer;
@@ -20,9 +19,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -89,12 +90,10 @@ public class FavoriteServiceImpl implements FavoriteService {
                     }
                 });
             }
-
             return favorites;
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Error occurred", e);
             throw e;
         }
     }
-
 }

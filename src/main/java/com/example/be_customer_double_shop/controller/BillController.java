@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/bill")
@@ -59,7 +60,7 @@ public class BillController {
     }
 
     @PostMapping("/get-detail-bill")
-    public ResponseEntity getDetailBill(@RequestBody BillRequest billRequest) {
+    public ResponseEntity getDetailBill(@RequestBody BillRequest billRequest) throws ExecutionException, InterruptedException {
         return new ResponseEntity(detailBillService.getDetailBill(billRequest), HttpStatus.OK);
     }
 
