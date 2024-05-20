@@ -14,7 +14,7 @@ public interface CustomerVoucherRepository extends JpaRepository<CustomerVoucher
 
     List<CustomerVoucher> findAllByVoucher(Voucher voucher);
 
-    CustomerVoucher findByVoucherId(Long id);
+    List<CustomerVoucher> findByVoucherId(Long id);
 
     @Query(value = "SELECT cs FROM CustomerVoucher cs WHERE cs.customer.id = :idCustomer AND cs.voucher.id = :idVoucher ")
     CustomerVoucher findByCustomerAndVoucher(@Param("idCustomer") long idCustomer, @Param("idVoucher") long idVoucher);

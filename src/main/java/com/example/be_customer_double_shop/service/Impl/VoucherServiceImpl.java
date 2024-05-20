@@ -1,10 +1,14 @@
 package com.example.be_customer_double_shop.service.Impl;
 
+import com.example.be_customer_double_shop.dto.request.VoucherRequest;
+import com.example.be_customer_double_shop.entity.CustomerVoucher;
 import com.example.be_customer_double_shop.entity.Voucher;
+import com.example.be_customer_double_shop.repository.CustomerVoucherRepository;
 import com.example.be_customer_double_shop.repository.VoucherRepository;
 import com.example.be_customer_double_shop.service.VoucherService;
 import com.example.be_customer_double_shop.util.DateUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -19,6 +23,9 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Autowired
     private VoucherRepository repository;
+
+    @Autowired
+    private CustomerVoucherRepository customerVoucherRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -44,5 +51,51 @@ public class VoucherServiceImpl implements VoucherService {
         voucher.setUpdatedBy(DateUtil.dateToString4(new Date()));
         return repository.save(voucher);
     }
+
+    @Override
+    public Voucher getByCodeAndCustomerId(VoucherRequest request, Long idCustomer) {
+        Voucher voucher = repository.getVoucherByCode(request.getCode());
+
+        if (voucher == null) {
+            throw new EntityNotFoundException("Voucher with code " + request.getCode() + " not found.");
+        }
+
+        if (voucher.getQuantity() == 0) {
+            throw new IllegalArgumentException("Đã hết số lượng cho phiếu giảm giá có mã: " + request.getCode());
+        }
+
+        if (voucher.getStatus() == 1) {
+            throw new IllegalArgumentException("Phiếu giảm giá có mã " + request.getCode() + " đã hết hạn.");
+        }
+
+        if (voucher.getStatus() == 2) {
+            throw new IllegalArgumentException("Phiếu giảm giá có mã " + request.getCode() + " đang tạm ngưng hoạt động.");
+        }
+
+        List<CustomerVoucher> customerVouchers = customerVoucherRepository.findByVoucherId(voucher.getId());
+
+        if (idCustomer == null) {
+            throw new IllegalArgumentException("CustomerId cannot be null.");
+        }
+
+        if (customerVouchers != null) {
+            boolean isCustomerVoucherFound = false;
+            for (CustomerVoucher customerVoucher : customerVouchers) {
+                if (customerVoucher.getCustomer().getId().equals(idCustomer)) {
+                    isCustomerVoucherFound = true;
+                    if (customerVoucher.getUsageDate() != null) {
+                        throw new IllegalArgumentException("Voucher với mã " + request.getCode() + " đã được sử dụng.");
+                    }
+                    break;
+                }
+            }
+            if (!isCustomerVoucherFound) {
+                throw new EntityNotFoundException("No customer associated with CustomerId " + idCustomer);
+            }
+        }
+
+        return voucher;
+    }
+
 }
 
