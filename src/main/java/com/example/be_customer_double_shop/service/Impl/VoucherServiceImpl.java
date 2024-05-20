@@ -53,7 +53,7 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Voucher getByCodeAndCustomerId(VoucherRequest request, Long idCustomer) {
+    public Voucher getByCodeAndCustomerId(VoucherRequest request) {
         Voucher voucher = repository.getVoucherByCode(request.getCode());
 
         if (voucher == null) {
@@ -74,14 +74,14 @@ public class VoucherServiceImpl implements VoucherService {
 
         List<CustomerVoucher> customerVouchers = customerVoucherRepository.findByVoucherId(voucher.getId());
 
-//        if (idCustomer == null) {
-//            throw new IllegalArgumentException("CustomerId cannot be null.");
-//        }
+        if (request.getIdCustomer() == null&&request.getCode().startsWith("PGGKH")) {
+            throw new IllegalArgumentException("CustomerId cannot be null.");
+        }
 
         if (customerVouchers != null) {
             boolean isCustomerVoucherFound = false;
             for (CustomerVoucher customerVoucher : customerVouchers) {
-                if (customerVoucher.getCustomer().getId().equals(idCustomer)) {
+                if (customerVoucher.getCustomer().getId().equals(request.getIdCustomer())) {
                     isCustomerVoucherFound = true;
                     if (customerVoucher.getUsageDate() != null) {
                         throw new IllegalArgumentException("Voucher với mã " + request.getCode() + " đã được sử dụng.");
@@ -90,7 +90,7 @@ public class VoucherServiceImpl implements VoucherService {
                 }
             }
             if (!isCustomerVoucherFound&&request.getCode().startsWith("PGGKH")) {
-                throw new EntityNotFoundException("No customer associated with CustomerId " + idCustomer);
+                throw new EntityNotFoundException("No customer associated with CustomerId " + request.getIdCustomer());
             }
         }
 

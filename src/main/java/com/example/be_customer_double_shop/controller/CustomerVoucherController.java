@@ -34,9 +34,9 @@ public class CustomerVoucherController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity check(@RequestBody VoucherRequest request, @RequestHeader("Authorization") String token){
-        String username = jwtProvider.getUsernameFromToken(token);
-        Customer customer=customerService.findUserbyUsername(username);
-        return new ResponseEntity(voucherService.getByCodeAndCustomerId(request,customer.getId()),HttpStatus.OK);
+    public ResponseEntity check(@RequestBody VoucherRequest request){
+//        String username = jwtProvider.getUsernameFromToken(token);
+//        Customer customer=customerService.findUserbyUsername(username);
+        return new ResponseEntity(voucherService.getByCodeAndCustomerId(request),HttpStatus.OK);
     }
 }

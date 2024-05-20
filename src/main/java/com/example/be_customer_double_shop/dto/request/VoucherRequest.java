@@ -15,6 +15,8 @@ public class VoucherRequest {
 
     private String code;
 
+    private Long idCustomer;
+
 
 }
 

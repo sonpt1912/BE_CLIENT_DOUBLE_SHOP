@@ -15,6 +15,6 @@ public interface VoucherService {
 
     Voucher updateVoucher(Voucher voucher, String username);
 
-    Voucher getByCodeAndCustomerId(VoucherRequest request,Long idCustomer);
+    Voucher getByCodeAndCustomerId(VoucherRequest request);
 
 }
