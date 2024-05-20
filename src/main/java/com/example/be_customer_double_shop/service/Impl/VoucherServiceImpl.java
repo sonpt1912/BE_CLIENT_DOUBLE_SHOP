@@ -74,9 +74,9 @@ public class VoucherServiceImpl implements VoucherService {
 
         List<CustomerVoucher> customerVouchers = customerVoucherRepository.findByVoucherId(voucher.getId());
 
-        if (idCustomer == null) {
-            throw new IllegalArgumentException("CustomerId cannot be null.");
-        }
+//        if (idCustomer == null) {
+//            throw new IllegalArgumentException("CustomerId cannot be null.");
+//        }
 
         if (customerVouchers != null) {
             boolean isCustomerVoucherFound = false;
@@ -89,7 +89,7 @@ public class VoucherServiceImpl implements VoucherService {
                     break;
                 }
             }
-            if (!isCustomerVoucherFound) {
+            if (!isCustomerVoucherFound&&request.getCode().startsWith("PGGKH")) {
                 throw new EntityNotFoundException("No customer associated with CustomerId " + idCustomer);
             }
         }
