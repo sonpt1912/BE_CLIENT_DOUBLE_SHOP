@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/customer-voucher")
+@RequestMapping("/public/customer-voucher")
 public class CustomerVoucherController {
     @Autowired
     private JwtProvider jwtProvider;
